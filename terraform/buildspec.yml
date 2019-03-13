@@ -8,7 +8,7 @@ phases:
      - echo "pre_build step"
  build:
    commands:
-     - aws s3 sync --delete . "s3://turo-lambda"
+     - aws s3 sync --delete ./app/handler.js "s3://turo-lambda"
  post_build:
    commands:
      - echo "post_build step"
