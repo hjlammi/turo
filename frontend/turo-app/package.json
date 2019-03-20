@@ -2,7 +2,6 @@
   "name": "turo-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://s3-eu-west-1.amazonaws.com/turo-app/index.html",
   "dependencies": {
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
