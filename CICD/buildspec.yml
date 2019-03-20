@@ -4,7 +4,7 @@ phases:
    commands:
      - cd backend
      - echo "install step"
-     - npm install serverless
+     - npm install -g serverless
  pre_build:
    commands:
      - echo "pre_build step"
