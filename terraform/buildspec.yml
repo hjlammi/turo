@@ -9,7 +9,8 @@ phases:
      - echo "pre_build step"
  build:
    commands:
-     - aws s3 sync --delete ./app "s3://turo-lambda"
+     - cd turoService
+     - serverless deploy -v
  post_build:
    commands:
      - echo "post_build step"
