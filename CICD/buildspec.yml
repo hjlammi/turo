@@ -2,15 +2,23 @@ version: 0.2
 phases:
  install:
    commands:
+     - echo "Install backend"
      - cd backend
-     - echo "install step"
      - npm install -g serverless
+     - echo "Install frontend"
+     - cd ../frontend/turo-app
+     - npm install
  pre_build:
    commands:
      - echo "pre_build step"
  build:
    commands:
+     - echo "Deploy backend"
+     - cd ../../backend
      - serverless deploy -v
+     - echo "Build React app"
+     - cd ../frontend/turo-app
+     - npm run build
  post_build:
    commands:
      - echo "post_build step"
