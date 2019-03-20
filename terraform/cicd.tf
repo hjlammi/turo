@@ -137,6 +137,45 @@ resource "aws_iam_role_policy" "codebuild_policy" {
         "logs:CreateLogStream",
         "logs:PutLogEvents"
       ]
+    },
+    {
+        "Action": [
+          "cloudformation:CreateStack",
+          "cloudformation:Describe*",
+          "cloudformation:ValidateTemplate",
+          "cloudformation:UpdateStack",
+          "cloudformation:List*",
+          "iam:GetRole",
+          "iam:CreateRole",
+          "iam:PutRolePolicy",
+          "iam:DeleteRolePolicy",
+          "iam:DeleteRole",
+          "iam:PassRole",
+          "lambda:UpdateFunctionCode",
+          "lambda:Get*",
+          "lambda:CreateFunction",
+          "lambda:InvokeFunction",
+          "lambda:UpdateFunctionConfiguration",
+          "lambda:PublishVersion",
+          "lambda:DeleteFunction",
+          "lambda:List*",
+          "lambda:AddPermission",
+          "s3:CreateBucket",
+          "s3:DeleteObject",
+          "s3:GetObject",
+          "s3:GetBucketLocation",
+          "s3:ListBucket",
+          "s3:PutObject",
+          "s3:DeleteBucket",
+          "s3:SetBucketEncryption",
+          "s3:GetEncryptionConfiguration",
+          "s3:PutEncryptionConfiguration",
+          "logs:Describe*",
+          "logs:CreateLogGroup",
+          "logs:DeleteLogGroup"
+        ],
+        "Resource": "*",
+        "Effect": "Allow"
     }
   ]
 }
