@@ -2,6 +2,7 @@ locals {
   pipeline_name = "turo-pipeline"
   github_username = "hjlammi"
   github_repo = "turo"
+  app = "turo-app"
 }
 
 data "aws_ssm_parameter" "github_token" {
@@ -14,8 +15,30 @@ resource "aws_s3_bucket" "build_artifact_bucket" {
   acl    = "private"
 }
 
-resource "aws_s3_bucket" "turo_lambda" {
-  bucket = "turo-lambda"
+resource "aws_s3_bucket" "turo_app" {
+  bucket = "${local.app}"
+  acl    = "public-read"
+  policy = "${file("policy.json")}"
+
+  policy = <<POLICY
+{
+  "Version":"2012-10-17",
+  "Statement":[
+    {
+      "Sid":"AddPerm",
+      "Effect":"Allow",
+      "Principal": "*",
+      "Action":["s3:GetObject"],
+      "Resource":["arn:aws:s3:::${local.app}/*"]
+    }
+  ]
+}
+POLICY
+
+  website {
+    index_document = "index.html"
+    error_document = "error.html"
+  }
 }
 
 data "aws_iam_policy_document" "codepipeline_assume_policy" {

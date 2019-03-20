@@ -19,6 +19,7 @@ phases:
      - echo "Build React app"
      - cd ../frontend/turo-app
      - npm run build
+     - aws s3 sync build s3://turo-app
  post_build:
    commands:
      - echo "post_build step"
