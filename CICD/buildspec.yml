@@ -2,14 +2,14 @@ version: 0.2
 phases:
  install:
    commands:
+     - cd backend
      - echo "install step"
-     - npm install -g serverless
+     - npm install serverless
  pre_build:
    commands:
      - echo "pre_build step"
  build:
    commands:
-     - cd turoService
      - serverless deploy -v
  post_build:
    commands:
