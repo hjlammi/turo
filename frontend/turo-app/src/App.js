@@ -1,11 +1,10 @@
 import React from 'react';
 import './App.css';
+import Header from './components/Header';
 
 const App = () => (
   <div className="App">
-    <header className="App-header">
-      <h1>Welcome to turo-app!</h1>
-    </header>
+    <Header headerText="Welcome to turo-app!" />
   </div>
 );
 
