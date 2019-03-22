@@ -7,8 +7,42 @@ context('Login', () => {
 
   describe('contents', () => {
     it('should have a welcome text', () => {
-      cy.get('.App-header')
+      cy.get('.header')
         .should('have.text', 'Welcome to turo-app!');
+    });
+
+    it('should have a login form', () => {
+      cy.get('.form')
+        .find('h2')
+        .should('have.text', 'Login');
+    });
+
+    it('should have an input field for username', () => {
+      cy.get('.field')
+        .find('label').first()
+        .should('contain', 'Username')
+        .and('have.attr', 'for', 'username');
+
+      cy.get('.field')
+        .find('input').first()
+        .should('have.attr', 'id', 'username');
+    });
+
+    it('should have an input field for password', () => {
+      cy.get('.field')
+        .find('label').eq(1)
+        .should('contain', 'Password')
+        .and('have.attr', 'for', 'password');
+
+      cy.get('.field')
+        .find('input').eq(1)
+        .should('have.attr', 'id', 'password');
+    });
+
+    it('should have a login button', () => {
+      cy.get('.field')
+        .find('button')
+    });
   //       .find('tbody tr:last')
   //       .should('have.class', 'success')
   //       .find('td')
@@ -38,13 +72,13 @@ context('Login', () => {
   //     // see https://on.cypress.io/using-cypress-faq#How-do-I-get-an-element’s-text-contents
   //   })
   //
-  //   it('.and() - chain multiple assertions together', () => {
-  //     // https://on.cypress.io/and
-  //     cy.get('.assertions-link')
-  //       .should('have.class', 'active')
-  //       .and('have.attr', 'href')
-  //       .and('include', 'cypress.io')
-  //   })
+    // it('.and() - chain multiple assertions together', () => {
+    //   // https://on.cypress.io/and
+    //   cy.get('.assertions-link')
+    //     .should('have.class', 'active')
+    //     .and('have.attr', 'href')
+    //     .and('include', 'cypress.io')
+    // })
   // })
   //
   // describe('Explicit Assertions', () => {
@@ -163,6 +197,5 @@ context('Login', () => {
   //     }
   //
   //     assert.isObject(person, 'value is object')
-    })
   })
 })
