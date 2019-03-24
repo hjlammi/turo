@@ -6,6 +6,7 @@ phases:
      - cd backend
      - npm install -g serverless
      - wget -qO- https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/5.2.4/flyway-commandline-5.2.4-linux-x64.tar.gz | tar xvz
+     - ln -sf '../libjsig.so' flyway-5.2.4/jre/lib/amd64/server/libjsig.so # Workaround for https://github.com/flyway/flyway/issues/2312
      - echo "Install frontend"
      - cd ../frontend/turo-app
      - npm install
