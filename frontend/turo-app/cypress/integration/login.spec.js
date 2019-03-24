@@ -2,7 +2,7 @@
 
 context('Login', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:3000/');
+    cy.visit('http://localhost:3000/#/login');
   });
 
   describe('contents', () => {
@@ -30,18 +30,19 @@ context('Login', () => {
 
     it('should have an input field for password', () => {
       cy.get('.field')
-        .find('label').eq(1)
+        .find('label').eq(1) // second label
         .should('contain', 'Password')
         .and('have.attr', 'for', 'password');
 
       cy.get('.field')
-        .find('input').eq(1)
+        .find('input').eq(1) // second input
         .should('have.attr', 'id', 'password');
     });
 
     it('should have a login button', () => {
-      cy.get('.field')
+      cy.get('.form')
         .find('button')
+        .should('have.length', 1);
     });
   //       .find('tbody tr:last')
   //       .should('have.class', 'success')

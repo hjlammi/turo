@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CustomButton from './CustomButton';
 
 const Field = (props) => {
   Field.propTypes = {
@@ -15,7 +14,6 @@ const Field = (props) => {
       <label type="label" htmlFor={id} className="label">
         {fieldLabel}
         <input type="text" className="input" id={id} />
-        <CustomButton buttonText="Login" />
       </label>
     </div>
   );

@@ -1,10 +1,32 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import createSagaMiddleware from 'redux-saga';
+import { render } from 'react-dom';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import { logger } from 'redux-logger';
+import reducer from './reducers/index';
 import * as serviceWorker from './serviceWorker';
+import App from './App';
+import rootSaga from './sagas/login';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// // create the saga middleware
+const sagaMiddleware = createSagaMiddleware();
+// mount it on the Store
+const store = createStore(
+  reducer,
+  applyMiddleware(sagaMiddleware, logger),
+);
+
+// then run the saga
+sagaMiddleware.run(rootSaga);
+
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root'),
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

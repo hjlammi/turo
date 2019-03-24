@@ -1,19 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 // Header component that is shown on every "page" as part of the view.
 
-const Header = (props) => {
-  Header.propTypes = {
-    headerText: PropTypes.string.isRequired,
-  };
-
-  const { headerText } = props;
-  return (
-    <div className="header">
-      <h1>{headerText}</h1>
-    </div>
-  );
-};
+const Header = () => (
+  <div className="header">
+    <h1>Welcome to turo-app!</h1>
+  </div>
+);
 
 export default Header;
