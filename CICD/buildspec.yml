@@ -5,6 +5,7 @@ phases:
      - echo "Install backend"
      - cd backend
      - npm install -g serverless
+     - wget -qO- https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/5.2.4/flyway-commandline-5.2.4-linux-x64.tar.gz | tar xvz
      - echo "Install frontend"
      - cd ../frontend/turo-app
      - npm install
@@ -16,6 +17,8 @@ phases:
      - echo "Deploy backend"
      - cd ../../backend
      - serverless deploy -v
+     - echo "Migrate database"
+     - flyway-5.2.4/flyway migrate --url="terraform-20190324164159438000000001.ccahsd6rorzm.eu-west-1.rds.amazonaws.com" --user="db_admin" password="$(aws ssm get-parameter --name turo_db_admin_password --with-decryption --output text --query Parameter.Value)"
      - echo "Build React app"
      - cd ../frontend/turo-app
      - npm run build

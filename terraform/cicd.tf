@@ -93,6 +93,13 @@ resource "aws_iam_role_policy" "attach_codepipeline_policy" {
             ],
             "Resource": "*",
             "Effect": "Allow"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ssm:GetParameter"
+            ],
+            "Resource": "${data.aws_ssm_parameter.db_admin_password.arn}"
         }
     ],
     "Version": "2012-10-17"
