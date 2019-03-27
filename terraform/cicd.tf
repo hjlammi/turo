@@ -15,6 +15,11 @@ resource "aws_s3_bucket" "build_artifact_bucket" {
   acl    = "private"
 }
 
+resource "aws_s3_bucket" "cache" {
+  bucket = "${local.pipeline_name}-cache"
+  acl    = "private"
+}
+
 resource "aws_s3_bucket" "turo_app" {
   bucket = "${local.app}"
   acl    = "public-read"
@@ -93,13 +98,6 @@ resource "aws_iam_role_policy" "attach_codepipeline_policy" {
             ],
             "Resource": "*",
             "Effect": "Allow"
-        },
-        {
-            "Effect": "Allow",
-            "Action": [
-                "ssm:GetParameter"
-            ],
-            "Resource": "${data.aws_ssm_parameter.db_admin_password.arn}"
         }
     ],
     "Version": "2012-10-17"
@@ -202,10 +200,44 @@ resource "aws_iam_role_policy" "codebuild_policy" {
           "s3:PutEncryptionConfiguration",
           "logs:Describe*",
           "logs:CreateLogGroup",
-          "logs:DeleteLogGroup"
+          "logs:DeleteLogGroup",
+          "ec2:DescribeSecurityGroups",
+          "ec2:DescribeSubnets",
+          "ec2:CreateNetworkInterface",
+          "ec2:DescribeNetworkInterfaces",
+          "ec2:DeleteNetworkInterface",
+          "ec2:DescribeDhcpOptions",
+          "iam:AWSCodeBuildDeveloperAccess"
         ],
         "Resource": "*",
         "Effect": "Allow"
+    },
+    {
+        "Effect": "Allow",
+        "Action": [
+            "ssm:GetParameter"
+        ],
+        "Resource": "${data.aws_ssm_parameter.db_instance_password.arn}"
+    },
+    {
+        "Effect": "Allow",
+        "Action": [
+            "ec2:CreateNetworkInterface",
+            "ec2:DescribeDhcpOptions",
+            "ec2:DescribeNetworkInterfaces",
+            "ec2:DeleteNetworkInterface",
+            "ec2:DescribeSubnets",
+            "ec2:DescribeSecurityGroups",
+            "ec2:DescribeVpcs"
+        ],
+        "Resource": "*"
+    },
+    {
+        "Effect": "Allow",
+        "Action": [
+            "ec2:*"
+        ],
+        "Resource": "*"
     }
   ]
 }
@@ -218,6 +250,11 @@ resource "aws_codebuild_project" "build_project" {
   description   = "The CodeBuild project for ${local.pipeline_name}"
   service_role  = "${aws_iam_role.codebuild_assume_role.arn}"
   build_timeout = "60"
+
+  cache {
+    type     = "S3"
+    location = "${aws_s3_bucket.cache.bucket}"
+  }
 
   artifacts {
     type = "CODEPIPELINE"
@@ -232,6 +269,33 @@ resource "aws_codebuild_project" "build_project" {
   source {
     type      = "CODEPIPELINE"
     buildspec = "${file("${path.root}/../CICD/buildspec.yml")}"
+  }
+
+  vpc_config {
+    vpc_id = "${aws_vpc.turo.id}"
+
+    subnets = [
+      "${aws_subnet.primary.id}"
+    ]
+
+    security_group_ids = [
+      "${aws_security_group.codebuild.id}"
+    ]
+  }
+}
+
+resource "aws_security_group" "codebuild" {
+  vpc_id = "${aws_vpc.turo.id}"
+  name_prefix = "codebuild"
+  egress {
+    description = "Internet access"
+    protocol = -1
+    from_port = 0
+    to_port = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags {
+    Name = "codebuild"
   }
 }
 
