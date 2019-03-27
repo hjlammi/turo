@@ -41,11 +41,3 @@ resource "aws_network_interface" "bastion" {
     Name = "bastion"
   }
 }
-
-resource "aws_eip" "bastion_instance" {
-  vpc = true
-  network_interface = "${aws_network_interface.bastion.id}"
-  tags {
-    Name = "bastion"
-  }
-}
