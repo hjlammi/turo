@@ -5,11 +5,14 @@ phases:
      - echo "Install backend"
      - cd backend
      - npm install -g serverless
-     - wget -qO- https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/5.2.4/flyway-commandline-5.2.4-linux-x64.tar.gz | tar xvz
-     - ln -sf '../libjsig.so' flyway-5.2.4/jre/lib/amd64/server/libjsig.so # Workaround for https://github.com/flyway/flyway/issues/2312
+     - |
+        if [ ! -d "flyway-5.2.4" ]; then
+          wget -qO- https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/5.2.4/flyway-commandline-5.2.4-linux-x64.tar.gz | tar xvz
+          ln -sf '../libjsig.so' flyway-5.2.4/jre/lib/amd64/server/libjsig.so # Workaround for https://github.com/flyway/flyway/issues/2312
+        fi
      - echo "Install frontend"
      - cd ../frontend/turo-app
-     - npm install
+     - npm install --only=prod
  pre_build:
    commands:
      - echo "pre_build step"
@@ -19,7 +22,7 @@ phases:
      - cd ../../backend
      - serverless deploy -v
      - echo "Migrate database"
-     - flyway-5.2.4/flyway migrate --url="terraform-20190324164159438000000001.ccahsd6rorzm.eu-west-1.rds.amazonaws.com" --user="db_admin" password="$(aws ssm get-parameter --name turo_db_admin_password --with-decryption --output text --query Parameter.Value)"
+     - flyway-5.2.4/flyway migrate -url="jdbc:postgresql://terraform-20190324164159438000000001.ccahsd6rorzm.eu-west-1.rds.amazonaws.com:5432/turo_db" -user="db_admin" -password="$(aws ssm get-parameter --name turo_db_admin_password --with-decryption --output text --query Parameter.Value)"
      - echo "Build React app"
      - cd ../frontend/turo-app
      - npm run build
@@ -27,3 +30,8 @@ phases:
  post_build:
    commands:
      - echo "post_build step"
+cache:
+  paths:
+    - '/root/frontend/node_modules/**/*'
+    - '/root/backend/flyway-5.2.4/**/*'
+    - '/usr/local/lib/node_modules/serverless/bin/serverless'
