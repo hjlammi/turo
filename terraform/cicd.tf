@@ -268,7 +268,7 @@ resource "aws_codebuild_project" "build_project" {
 
   source {
     type      = "CODEPIPELINE"
-    buildspec = "${file("${path.root}/../CICD/buildspec.yml")}"
+    buildspec = "${file("${path.root}/../buildspec.yml")}"
   }
 
   vpc_config {

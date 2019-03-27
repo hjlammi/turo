@@ -4,7 +4,7 @@ phases:
    commands:
      - echo "Install backend"
      - cd backend
-     - npm install -g serverless
+     - npm install serverless
      - |
         if [ ! -d "flyway-5.2.4" ]; then
           wget -qO- https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/5.2.4/flyway-commandline-5.2.4-linux-x64.tar.gz | tar xvz
@@ -20,9 +20,9 @@ phases:
    commands:
      - echo "Deploy backend"
      - cd ../../backend
-     - serverless deploy -v
+     - npx serverless deploy -v
      - echo "Migrate database"
-     - flyway-5.2.4/flyway migrate -url="jdbc:postgresql://terraform-20190324164159438000000001.ccahsd6rorzm.eu-west-1.rds.amazonaws.com:5432/turo_db" -user="db_admin" -password="$(aws ssm get-parameter --name turo_db_admin_password --with-decryption --output text --query Parameter.Value)"
+     - flyway-5.2.4/flyway migrate -url="jdbc:postgresql://turodb.ccahsd6rorzm.eu-west-1.rds.amazonaws.com:5432/turo_db" -user="db_admin" -password="$(aws ssm get-parameter --name db_instance_password --with-decryption --output text --query Parameter.Value)" -locations=filesystem:sql
      - echo "Build React app"
      - cd ../frontend/turo-app
      - npm run build
@@ -32,6 +32,5 @@ phases:
      - echo "post_build step"
 cache:
   paths:
-    - '/root/frontend/node_modules/**/*'
-    - '/root/backend/flyway-5.2.4/**/*'
-    - '/usr/local/lib/node_modules/serverless/bin/serverless'
+    - 'frontend/turo-app/node_modules/**/*'
+    - 'backend/flyway-5.2.4/**/*'
