@@ -44,6 +44,12 @@ context('Login', () => {
         .find('button')
         .should('have.length', 1);
     });
+
+    it('should have a link to a signup page', () => {
+      cy.get('.link')
+        .should('have.text', 'Sign up')
+        .click();
+    });
   //       .find('tbody tr:last')
   //       .should('have.class', 'success')
   //       .find('td')

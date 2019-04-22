@@ -5,6 +5,7 @@ import {
   Route,
 } from 'react-router-dom';
 import LoginContainer from './containers/LoginContainer';
+import SignupContainer from './containers/SignupContainer';
 import HeaderContainer from './containers/HeaderContainer';
 
 const App = () => (
@@ -13,6 +14,7 @@ const App = () => (
       <Route path="/" component={HeaderContainer} />
       <div>
         <Route path="/login" component={LoginContainer} />
+        <Route path="/signup" component={SignupContainer} />
       </div>
     </div>
   </Router>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Form from './Form';
 
 export default class Login extends React.Component {
@@ -12,7 +13,10 @@ export default class Login extends React.Component {
 
   render() {
     return (
-      <Form formLabel="Login" />
+      <div>
+        <Form formLabel="Login" />
+        <Link to="/signup" className="link">Sign up</Link>
+      </div>
     );
   }
 }
