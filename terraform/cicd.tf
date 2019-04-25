@@ -238,6 +238,15 @@ resource "aws_iam_role_policy" "codebuild_policy" {
             "ec2:*"
         ],
         "Resource": "*"
+    },
+    {
+        "Effect": "Allow",
+        "Action": [
+            "apigateway:*"
+        ],
+        "Resource": [
+            "arn:aws:apigateway:eu-west-1::/restapis"
+        ]
     }
   ]
 }
