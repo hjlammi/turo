@@ -1,0 +1,10 @@
+version: '3'
+services:
+  postgres:
+    image: "postgres:11.1"
+    ports:
+     - "127.0.0.1:5432:5432"
+    environment:
+      POSTGRES_USER: turo
+      POSTGRES_PASSWORD: turo123
+      POSTGRES_DB: turo_db
