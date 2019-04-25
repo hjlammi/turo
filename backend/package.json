@@ -1,0 +1,11 @@
+{
+  "name": "turo_backend",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "flyway": "../../flyway-6.0.0-beta/flyway -url='jdbc:postgresql://localhost:5432/turo_db' -user=turo -password=turo123 -locations=filesystem:../sql",
+    "migrate": "npm run flyway -- clean && npm run flyway -- migrate"
+  },
+  "author": "Heidi Lammi-Mihaljov",
+  "license": "MIT"
+}
