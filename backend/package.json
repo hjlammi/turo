@@ -4,8 +4,18 @@
   "description": "",
   "scripts": {
     "flyway": "../../flyway-6.0.0-beta/flyway -url='jdbc:postgresql://localhost:5432/turo_db' -user=turo -password=turo123 -locations=filesystem:../sql",
-    "migrate": "npm run flyway -- clean && npm run flyway -- migrate"
+    "migrate": "npm run flyway -- clean && npm run flyway -- migrate",
+    "test": "mocha"
   },
   "author": "Heidi Lammi-Mihaljov",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.12.4",
+    "husky": "^1.3.1",
+    "mocha": "^6.1.4"
+  }
 }
