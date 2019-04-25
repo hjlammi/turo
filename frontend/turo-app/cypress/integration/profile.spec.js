@@ -4,10 +4,21 @@ context('Profile', () => {
   });
 
   describe('contents of the Profile page', () => {
-    it('should have a profile info', () => {
+    it('should have a profile heading', () => {
       cy.get('.profile')
       .find('h2')
       .should('have.text', 'Profile');
+    });
+
+    it('should have a username', () => {
+      cy.get('.profile')
+      .find('h3')
+      .should('have.text', 'Username');
+    });
+
+    it('should have an email', () => {
+      cy.get('.profile h3').first()
+      .should('have.text', 'E-mail address');
     });
 
     // it('should have an input field for username', () => {
