@@ -5,3 +5,6 @@ module.exports.createUser = async event => ({
     input: event,
   }),
 });
+
+module.exports.authenticate = async () => ({
+});
