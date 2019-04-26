@@ -1,41 +1,32 @@
 const bcrypt = require('bcrypt');
+const dbUser = require('./db/user');
+
+const saltRounds = 10;
+const dummyHash = bcrypt.hashSync('dummy_password', saltRounds);
 
 exports.create = async (db, username, password) => {
-  const result = await db.query(
-    'SELECT username FROM "user" WHERE username = $1',
-    [username],
-  );
+  const user = await dbUser.findByUsername(db, username);
 
-  const saltRounds = 10;
-  const hash = await bcrypt.hash(password, saltRounds);
-
-  // Insert new user into the user table if a user with the same username doesn't already exist.
-  if (result.rowCount === 0) {
-    await db.query(
-      'INSERT INTO "user"(username, password) VALUES($1, $2)',
-      [username, hash],
-    );
-
-    return true;
-  }
-
-  return false;
-};
-
-exports.authenticate = async (db, username, password) => {
-  const result = await db.query(
-    'SELECT password FROM "user" WHERE username = $1',
-    [username],
-  );
-
-  if (result.rowCount === 0) {
+  // If a user with the username already exists
+  // then a user with the same username cannot be created.
+  if (user) {
     return false;
   }
 
-  const match = await bcrypt.compare(password, result.rows[0].password);
-  if (match) {
-    return true;
+  const hash = await bcrypt.hash(password, saltRounds);
+
+  await dbUser.add(db, username, hash);
+  return true;
+};
+
+exports.authenticate = async (db, username, password) => {
+  const user = await dbUser.findByUsername(db, username);
+
+  if (!user) {
+    // Protect against timing-based user enumeration
+    await bcrypt.compare(password, dummyHash);
+    return false;
   }
 
-  return false;
+  return bcrypt.compare(password, user.password);
 };
