@@ -1,6 +1,6 @@
 const { expect } = require('chai');
 const pg = require('pg');
-const user = require('../src/user.js');
+const user = require('../../src/domain/user.js');
 
 describe('User authentication', function () {
   let db;

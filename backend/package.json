@@ -5,7 +5,7 @@
   "scripts": {
     "flyway": "../../flyway-6.0.0-beta/flyway -url='jdbc:postgresql://localhost:5432/turo_db' -user=turo -password=turo123 -locations=filesystem:../sql",
     "migrate": "npm run flyway -- clean && npm run flyway -- migrate",
-    "test": "mocha"
+    "test": "mocha --recursive"
   },
   "author": "Heidi Lammi-Mihaljov",
   "license": "MIT",
