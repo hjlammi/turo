@@ -41,4 +41,46 @@ describe('User authentication', function () {
     const result = await user.authenticate(db, 'essi@example.com', 'secret_password');
     expect(result).to.equal(true);
   });
+
+  it('fails when tries to create a user with an existing username', async function () {
+    await user.create(db, 'essi@example.com', 'secret_password');
+    const result = await user.create(db, 'essi@example.com', 'secret_password');
+    expect(result).to.equal(false);
+  });
+});
+
+describe('User creation', function () {
+  let db;
+
+  before(async function () {
+    db = new pg.Client({
+      host: 'localhost',
+      port: 5432,
+      database: 'turo_db',
+      user: 'turo',
+      password: 'turo123',
+    });
+
+    await db.connect();
+  });
+
+  beforeEach(async function () {
+    await db.query('DELETE from "user"');
+  });
+
+  after(async function () {
+    await db.end();
+  });
+
+  it('fails when tries to create a user with an existing username', async function () {
+    await user.create(db, 'essi@example.com', 'secret_password');
+    const result = await user.create(db, 'essi@example.com', 'secret_password');
+    expect(result).to.equal(false);
+  });
+
+  it('succeeds with a non-existing username', async function () {
+    await user.create(db, 'another_user@example.com', 'another_password');
+    const result = await user.create(db, 'essi@example.com', 'secret_password');
+    expect(result).to.equal(true);
+  });
 });
