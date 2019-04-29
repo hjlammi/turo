@@ -36,7 +36,16 @@ app.post('/users/register', async (req, res) => {
 });
 
 
-    res.send(400);
+app.post('/users/login', async (req, res) => {
+  const { username, password } = req.body;
+
+  await withDb(async (db) => {
+    const result = await userService.login(db, username, password);
+    if (result) {
+      res.send(200);
+    } else {
+      res.send(400);
+    }
   });
 });
 

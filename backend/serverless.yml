@@ -57,10 +57,19 @@ provider:
 functions:
   app:
     handler: src/presentation/handler.handler
+  createUser:
+    handler: src/presentation/handler.handler
     events:
       - http:
           path: users/register
           method: post
+  login:
+    handler: src/presentation/handler.handler
+    events:
+      - http:
+          path: users/login
+          method: post
+
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
