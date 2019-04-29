@@ -55,11 +55,11 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  createUser:
-    handler: handler.createUser
+  app:
+    handler: src/presentation/handler.handler
     events:
       - http:
-          path: users/create
+          path: users/register
           method: post
 
 #    The following are a few example events you can configure
@@ -107,3 +107,6 @@ functions:
 #     NewOutput:
 #       Description: "Description for the output"
 #       Value: "Some output value"
+
+plugins:
+  - serverless-offline

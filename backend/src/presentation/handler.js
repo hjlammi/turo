@@ -1,10 +1,34 @@
-module.exports.createUser = async event => ({
-  statusCode: 200,
-  body: JSON.stringify({
-    message: 'Hello Serverless testingtestingtestgtrshtrgfv!',
-    input: event,
-  }),
+const serverless = require('serverless-http');
+const express = require('express');
+const pg = require('pg');
+const bodyParser = require('body-parser');
+
+const userService = require('../application/userService');
+
+const app = express();
+app.use(bodyParser.json()); // for parsing application/json
+
+const withDb = async (f) => {
+  const db = new pg.Client({
+    host: 'localhost',
+    port: 5432,
+    database: 'turo_db',
+    user: 'turo',
+    password: 'turo123',
+  });
+
+  await db.connect();
+  await f(db);
+  await db.end();
+};
+
+app.post('/users/register', async (req, res) => {
+  const { username, password } = req.body;
+
+  await withDb(async (db) => {
+    await userService.register(db, username, password);
+  });
+  res.send(200);
 });
 
-module.exports.authenticate = async () => ({
-});
+module.exports.handler = serverless(app);
