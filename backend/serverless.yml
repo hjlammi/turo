@@ -119,3 +119,7 @@ functions:
 
 plugins:
   - serverless-offline
+
+custom:
+  serverless-offline:
+    port: 4000

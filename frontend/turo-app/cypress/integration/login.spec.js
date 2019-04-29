@@ -47,8 +47,17 @@ context('Login', () => {
 
     it('should have a link to a signup page', () => {
       cy.get('.link')
-        .should('have.text', 'Sign up')
-        .click();
+        .should('have.text', 'Sign up');
+    });
+
+    it('should not login with the wrong credentials', () => {
+      cy.get('#username').
+      type('essi@example');
+
+      cy.get('#password').
+      type('wrong_password');
+
+      cy.get('#loginButton').click();
     });
   //       .find('tbody tr:last')
   //       .should('have.class', 'success')

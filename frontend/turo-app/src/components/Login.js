@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Form from './Form';
+import Field from './Field';
+import CustomButton from './CustomButton';
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -14,7 +15,12 @@ export default class Login extends React.Component {
   render() {
     return (
       <div>
-        <Form formLabel="Login" />
+        <form className="form">
+          <h2>Login</h2>
+          <Field fieldLabel="Username" id="username" />
+          <Field fieldLabel="Password" id="password" />
+          <CustomButton buttonText="Login" id="loginButton" />
+        </form>
         <Link to="/signup" className="link">Sign up</Link>
       </div>
     );
