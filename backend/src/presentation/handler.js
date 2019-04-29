@@ -26,9 +26,18 @@ app.post('/users/register', async (req, res) => {
   const { username, password } = req.body;
 
   await withDb(async (db) => {
-    await userService.register(db, username, password);
+    const result = await userService.register(db, username, password);
+    if (result) {
+      res.send(200);
+    } else {
+      res.send(400);
+    }
   });
-  res.send(200);
+});
+
+
+    res.send(400);
+  });
 });
 
 module.exports.handler = serverless(app);
