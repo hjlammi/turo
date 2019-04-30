@@ -2,8 +2,8 @@ import { connect } from 'react-redux';
 import logIn from '../actions/login';
 import Login from '../components/Login';
 
-const mapStateToProps = () => ({
-  // isLoggedIn: state.user !== null,
+const mapStateToProps = state => ({
+  logInError: state.logIn.failed,
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Field from './Field';
 import CustomButton from './CustomButton';
+import '../css/login.css';
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -21,8 +22,17 @@ export default class Login extends React.Component {
   }
 
   render() {
+    // Error message if email or password were incorrect.
+    const { logInError } = this.props;
+    const errorMsg = logInError ? (
+      <p className="error">Wrong username or password!</p>
+    ) : (
+      <p />
+    );
+
     return (
       <div>
+        { errorMsg }
         <form
           className="form"
           method="post"
@@ -46,4 +56,5 @@ export default class Login extends React.Component {
 
 Login.propTypes = {
   onLogin: PropTypes.func.isRequired,
+  logInError: PropTypes.bool.isRequired,
 };
