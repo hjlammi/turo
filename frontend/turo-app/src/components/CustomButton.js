@@ -9,7 +9,7 @@ const CustomButton = (props) => {
 
   const { buttonText, id } = props;
   return (
-    <button type="button" className="button" id={id}>
+    <button className="button" id={id} type="submit">
       {buttonText}
     </button>
   );
