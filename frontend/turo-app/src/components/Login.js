@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Field from './Field';
 import CustomButton from './CustomButton';
 
@@ -20,6 +21,7 @@ export default class Login extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     return (
       <div>
         <form
@@ -27,13 +29,14 @@ export default class Login extends React.Component {
           method="post"
           onSubmit={(e) => {
             e.preventDefault();
-            this.props.onLogin(this.state.username, this.state.password);
+            const { username, password } = this.state;
+            const { onLogin } = this.props;
+            onLogin(username, password);
           }}
         >
           <h2>Login</h2>
           <Field fieldLabel="Username" id="username" onChange={(e) => { this.handleChange(e, 'username'); }} />
           <Field fieldLabel="Password" id="password" onChange={(e) => { this.handleChange(e, 'password'); }} />
-           <input type="submit" value="Pieru" />
           <CustomButton buttonText="Login" id="loginButton" />
         </form>
         <Link to="/signup" className="link">Sign up</Link>
@@ -41,3 +44,7 @@ export default class Login extends React.Component {
     );
   }
 }
+
+Login.propTypes = {
+  onLogin: PropTypes.func.isRequired,
+};

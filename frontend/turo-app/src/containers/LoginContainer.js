@@ -6,9 +6,9 @@ const mapStateToProps = () => ({
   // isLoggedIn: state.user !== null,
 });
 
-const mapDispatchToProps = {
-  logIn,
-};
+const mapDispatchToProps = dispatch => ({
+  onLogin: (username, password) => dispatch(logIn(username, password)),
+});
 
 export default connect(
   mapStateToProps,

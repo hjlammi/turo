@@ -6,7 +6,6 @@ const dummyHash = bcrypt.hashSync('dummy_password', saltRounds);
 
 exports.create = async (db, username, password) => {
   const user = await userRepository.findByUsername(db, username);
-
   // If a user with the username already exists
   // then a user with the same username cannot be created.
   if (user) {
@@ -24,7 +23,7 @@ exports.authenticate = async (db, username, password) => {
 
   if (!user) {
     // Protect against timing-based user enumeration
-    await bcrypt.compare(password, dummyHash);
+    await bcrypt.compare('dummy_password', dummyHash);
     return false;
   }
 
