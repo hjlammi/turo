@@ -7,18 +7,33 @@ export default class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // email: "",
-      // password: ""
+      username: '',
+      password: '',
     };
+  }
+
+  // Event handler that passes the texts written in the input fields to the component state.
+  handleChange = (event, field) => {
+    this.setState({
+      [field]: event.target.value,
+    });
   }
 
   render() {
     return (
       <div>
-        <form className="form">
+        <form
+          className="form"
+          method="post"
+          onSubmit={(e) => {
+            e.preventDefault();
+            this.props.onLogin(this.state.username, this.state.password);
+          }}
+        >
           <h2>Login</h2>
-          <Field fieldLabel="Username" id="username" />
-          <Field fieldLabel="Password" id="password" />
+          <Field fieldLabel="Username" id="username" onChange={(e) => { this.handleChange(e, 'username'); }} />
+          <Field fieldLabel="Password" id="password" onChange={(e) => { this.handleChange(e, 'password'); }} />
+           <input type="submit" value="Pieru" />
           <CustomButton buttonText="Login" id="loginButton" />
         </form>
         <Link to="/signup" className="link">Sign up</Link>
