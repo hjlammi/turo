@@ -9,6 +9,7 @@ phases:
           wget -qO- https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/5.2.4/flyway-commandline-5.2.4-linux-x64.tar.gz | tar xvz
           ln -sf '../libjsig.so' flyway-5.2.4/jre/lib/amd64/server/libjsig.so # Workaround for https://github.com/flyway/flyway/issues/2312
         fi
+     - npm install
      - echo "Install frontend"
      - cd ../frontend/turo-app
      - npm install
@@ -19,7 +20,7 @@ phases:
    commands:
      - echo "Deploy backend"
      - cd ../../backend
-     - npx serverless deploy -v
+     - env NODE_ENV=production npx serverless deploy -v
      - echo "Migrate database"
      - flyway-5.2.4/flyway migrate -url="jdbc:postgresql://turodb.ccahsd6rorzm.eu-west-1.rds.amazonaws.com:5432/turo_db" -user="db_admin" -password="$(aws ssm get-parameter --name db_instance_password --with-decryption --output text --query Parameter.Value)" -locations=filesystem:../sql
      - echo "Build React app"
