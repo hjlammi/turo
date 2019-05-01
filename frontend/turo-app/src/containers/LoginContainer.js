@@ -4,6 +4,7 @@ import Login from '../components/Login';
 
 const mapStateToProps = state => ({
   logInError: state.logIn.failed,
+  isLoggedIn: state.logIn.isLoggedIn,
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -50,14 +50,20 @@ context('Login', () => {
         .should('have.text', 'Sign up');
     });
 
-    it('should not login with the wrong credentials', () => {
-      cy.get('#username').
-      type('essi@example');
-
-      cy.get('#password').
-      type('wrong_password');
-
+    it('should show error message when logging in with invalid credentials', () => {
+      cy.get('#username').type('essi@example.com');
+      cy.get('#password').type('wrong_password');
       cy.get('#loginButton').click();
+
+      cy.get('.error').should('have.text', 'Wrong username or password!');
+    });
+
+    it('should log in with valid credentials', () => {
+      cy.get('#username').type('essi@example.com');
+      cy.get('#password').type('secret_password');
+      cy.get('#loginButton').click();
+
+      cy.location('hash').should('eq', '#/');
     });
   //       .find('tbody tr:last')
   //       .should('have.class', 'success')

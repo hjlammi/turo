@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Field from './Field';
 import CustomButton from './CustomButton';
@@ -22,6 +22,12 @@ export default class Login extends React.Component {
   }
 
   render() {
+    const { isLoggedIn } = this.props;
+
+    if (isLoggedIn) {
+      return <Redirect to={{ pathname: '/' }} />;
+    }
+
     // Error message if email or password were incorrect.
     const { logInError } = this.props;
     const errorMsg = logInError ? (
@@ -57,4 +63,5 @@ export default class Login extends React.Component {
 Login.propTypes = {
   onLogin: PropTypes.func.isRequired,
   logInError: PropTypes.bool.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
 };
