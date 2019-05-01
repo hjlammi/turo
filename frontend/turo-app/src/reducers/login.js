@@ -11,6 +11,18 @@ const failed = (state = false, action) => {
   }
 };
 
+const isLoggedIn = (state = false, action) => {
+  switch (action.type) {
+    case 'LOG_IN_SUCCESS':
+      return true;
+    case 'LOG_IN_FAILURE':
+      return false;
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   failed,
+  isLoggedIn,
 });
