@@ -245,7 +245,8 @@ resource "aws_iam_role_policy" "codebuild_policy" {
             "apigateway:*"
         ],
         "Resource": [
-            "arn:aws:apigateway:eu-west-1::/restapis"
+            "arn:aws:apigateway:eu-west-1::/restapis",
+            "arn:aws:apigateway:eu-west-1::/restapis/*"
         ]
     }
   ]
