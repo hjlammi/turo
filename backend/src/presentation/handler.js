@@ -2,24 +2,44 @@ const serverless = require('serverless-http');
 const express = require('express');
 const pg = require('pg');
 const bodyParser = require('body-parser');
+const session = require('express-session');
+const PGSession = require('connect-pg-simple')(session);
 
 const userService = require('../application/userService');
+
+const dbPool = new pg.Pool({
+  host: 'localhost',
+  port: 5432,
+  database: 'turo_db',
+  user: 'turo',
+  password: 'turo123',
+});
 
 const app = express();
 app.use(bodyParser.json()); // for parsing application/json
 
-const withDb = async (f) => {
-  const db = new pg.Client({
-    host: 'localhost',
-    port: 5432,
-    database: 'turo_db',
-    user: 'turo',
-    password: 'turo123',
-  });
+const sess = {
+  store: new PGSession({ pool: dbPool }),
+  secret: process.env.SESSION_SECRET,
+  cookie: { maxAge: 24 * 60 * 60 * 1000 }, // 24 hours
+  resave: false,
+  saveUninitialized: true,
+};
 
-  await db.connect();
-  await f(db);
-  await db.end();
+if (app.get('env') === 'production') {
+  sess.cookie.secure = true; // serve secure cookies
+}
+
+app.use(session(sess));
+
+const withDb = async (f) => {
+  const db = await dbPool.connect();
+
+  try {
+    await f(db);
+  } finally {
+    await db.release();
+  }
 };
 
 app.post('/users/register', async (req, res) => {
