@@ -17,15 +17,15 @@ context('Login', () => {
         .should('have.text', 'Login');
     });
 
-    it('should have an input field for username', () => {
+    it('should have an input field for email', () => {
       cy.get('.field')
         .find('label').first()
-        .should('contain', 'Username')
-        .and('have.attr', 'for', 'username');
+        .should('contain', 'Email')
+        .and('have.attr', 'for', 'email');
 
       cy.get('.field')
         .find('input').first()
-        .should('have.attr', 'id', 'username');
+        .should('have.attr', 'id', 'email');
     });
 
     it('should have an input field for password', () => {
@@ -51,15 +51,15 @@ context('Login', () => {
     });
 
     it('should show error message when logging in with invalid credentials', () => {
-      cy.get('#username').type('essi@example.com');
+      cy.get('#email').type('essi@example.com');
       cy.get('#password').type('wrong_password');
       cy.get('#loginButton').click();
 
-      cy.get('.error').should('have.text', 'Wrong username or password!');
+      cy.get('.error').should('have.text', 'Wrong email or password!');
     });
 
     it('should log in with valid credentials', () => {
-      cy.get('#username').type('essi@example.com');
+      cy.get('#email').type('essi@example.com');
       cy.get('#password').type('secret_password');
       cy.get('#loginButton').click();
 

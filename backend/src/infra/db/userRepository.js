@@ -1,15 +1,15 @@
-exports.findByUsername = async (db, username) => {
+exports.findByEmail = async (db, email) => {
   const result = await db.query(
-    'SELECT * FROM "user" WHERE username = $1',
-    [username],
+    'SELECT * FROM "user" WHERE email = $1',
+    [email],
   );
 
   return result.rows[0];
 };
 
-exports.add = async (db, username, hashedPassword) => {
+exports.add = async (db, email, hashedPassword) => {
   await db.query(
-    'INSERT INTO "user"(username, password) VALUES($1, $2)',
-    [username, hashedPassword],
+    'INSERT INTO "user"(email, password) VALUES($1, $2)',
+    [email, hashedPassword],
   );
 };

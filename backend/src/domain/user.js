@@ -4,22 +4,22 @@ const userRepository = require('../infra/db/userRepository');
 const saltRounds = 10;
 const dummyHash = bcrypt.hashSync('dummy_password', saltRounds);
 
-exports.create = async (db, username, password) => {
-  const user = await userRepository.findByUsername(db, username);
-  // If a user with the username already exists
-  // then a user with the same username cannot be created.
+exports.create = async (db, email, password) => {
+  const user = await userRepository.findByEmail(db, email);
+  // If a user with the email already exists
+  // then a user with the same email cannot be created.
   if (user) {
     return false;
   }
 
   const hash = await bcrypt.hash(password, saltRounds);
 
-  await userRepository.add(db, username, hash);
+  await userRepository.add(db, email, hash);
   return true;
 };
 
-exports.authenticate = async (db, username, password) => {
-  const user = await userRepository.findByUsername(db, username);
+exports.authenticate = async (db, email, password) => {
+  const user = await userRepository.findByEmail(db, email);
 
   if (!user) {
     // Protect against timing-based user enumeration

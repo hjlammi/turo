@@ -9,7 +9,7 @@ export default class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
+      email: '',
       password: '',
     };
   }
@@ -31,7 +31,7 @@ export default class Login extends React.Component {
     // Error message if email or password were incorrect.
     const { logInError } = this.props;
     const errorMsg = logInError ? (
-      <p className="error">Wrong username or password!</p>
+      <p className="error">Wrong email or password!</p>
     ) : (
       <p />
     );
@@ -44,13 +44,13 @@ export default class Login extends React.Component {
           method="post"
           onSubmit={(e) => {
             e.preventDefault();
-            const { username, password } = this.state;
+            const { email, password } = this.state;
             const { onLogin } = this.props;
-            onLogin(username, password);
+            onLogin(email, password);
           }}
         >
           <h2>Login</h2>
-          <Field fieldLabel="Username" id="username" onChange={(e) => { this.handleChange(e, 'username'); }} />
+          <Field fieldLabel="Email" id="email" onChange={(e) => { this.handleChange(e, 'email'); }} />
           <Field fieldLabel="Password" id="password" onChange={(e) => { this.handleChange(e, 'password'); }} />
           <CustomButton buttonText="Login" id="loginButton" />
         </form>

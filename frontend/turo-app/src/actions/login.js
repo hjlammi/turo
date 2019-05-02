@@ -1,6 +1,6 @@
-const logIn = (username, password) => ({
+const logIn = (email, password) => ({
   type: 'LOG_IN',
-  username,
+  email,
   password,
 });
 

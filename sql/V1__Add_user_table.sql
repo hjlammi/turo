@@ -1,5 +1,7 @@
 CREATE TABLE "user" (
-    id SERIAL PRIMARY KEY,
-    username varchar(100) NOT NULL,
-    password varchar(100) NOT NULL
+    id SERIAL,
+    username VARCHAR(100),
+    email VARCHAR(100) NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    PRIMARY KEY (id)
 );

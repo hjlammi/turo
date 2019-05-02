@@ -1,6 +1,6 @@
 import { put, takeLatest, all } from 'redux-saga/effects';
 
-function* logIn({ username, password }) {
+function* logIn({ email, password }) {
   try {
     const result = yield fetch('http://localhost:4000/users/login',
       {
@@ -9,7 +9,7 @@ function* logIn({ username, password }) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          username,
+          email,
           password,
         }),
       });

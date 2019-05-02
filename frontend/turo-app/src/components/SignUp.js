@@ -13,7 +13,7 @@ export default class SignUp extends React.Component {
     return (
       <form className="form">
         <h2>Sign up</h2>
-        <Field fieldLabel="Username" id="username" />
+        <Field fieldLabel="Email" id="email" />
         <Field fieldLabel="Password" id="password" />
         <Field fieldLabel="Confirm password" id="password" />
         <CustomButton buttonText="Sign up" />

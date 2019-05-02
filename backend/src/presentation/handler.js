@@ -43,10 +43,10 @@ const withDb = async (f) => {
 };
 
 app.post('/users/register', async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
   await withDb(async (db) => {
-    const result = await userService.register(db, username, password);
+    const result = await userService.register(db, email, password);
     if (result) {
       res.send(200);
     } else {
@@ -57,10 +57,10 @@ app.post('/users/register', async (req, res) => {
 
 
 app.post('/users/login', async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
   await withDb(async (db) => {
-    const result = await userService.login(db, username, password);
+    const result = await userService.login(db, email, password);
     if (result) {
       res.send(200);
     } else {
