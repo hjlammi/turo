@@ -5,10 +5,15 @@ const Field = (props) => {
   Field.propTypes = {
     fieldLabel: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired,
+    onChange: PropTypes.func,
   };
 
   const { fieldLabel, id, onChange } = props;
+
+  Field.defaultProps = {
+    onChange,
+  };
+
   return (
     <div className="field">
       <label type="label" htmlFor={id} className="label">
