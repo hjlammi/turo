@@ -13,3 +13,9 @@ exports.add = async (db, email, hashedPassword) => {
     [email, hashedPassword],
   );
 };
+
+exports.deleteAll = async (db) => {
+  await db.query(
+    'DELETE FROM "user"',
+  );
+};

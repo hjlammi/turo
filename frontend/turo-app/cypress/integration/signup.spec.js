@@ -1,4 +1,8 @@
 context('SignUp', () => {
+  before(() => {
+    cy.request('DELETE', 'http://localhost:4000/e2e/users');
+  });
+
   beforeEach(() => {
     cy.visit('http://localhost:3000/#/signup');
   });

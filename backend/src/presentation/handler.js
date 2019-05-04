@@ -55,7 +55,6 @@ app.post('/users/register', async (req, res) => {
   });
 });
 
-
 app.post('/users/login', async (req, res) => {
   const { email, password } = req.body;
 
@@ -68,5 +67,19 @@ app.post('/users/login', async (req, res) => {
     }
   });
 });
+
+// Used only in dev env for emptying db for tests.
+// Must be disabled for production!
+if (process.env.E2E_API_ENABLED) {
+  /* eslint-disable global-require */
+  const e2eUserService = require('../application/e2e/userService');
+  /* eslint-enable global-require */
+  app.delete('/e2e/users', async (req, res) => {
+    await withDb(async (db) => {
+      await e2eUserService.deleteAll(db);
+      res.send(200);
+    });
+  });
+}
 
 module.exports.handler = serverless(app);

@@ -69,7 +69,12 @@ functions:
       - http:
           path: users/login
           method: post
-
+  e2eDeleteAll:
+    handler: src/presentation/handler.handler
+    events:
+      - http:
+          path: e2e/users
+          method: delete
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
