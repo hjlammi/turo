@@ -1,8 +1,8 @@
 import { put, takeLatest } from 'redux-saga/effects';
 
-function* logIn({ email, password }) {
+function* signUp({ email, password }) {
   try {
-    const result = yield fetch('http://localhost:4000/users/login',
+    const result = yield fetch('http://localhost:4000/users/register',
       {
         method: 'POST',
         headers: {
@@ -15,15 +15,15 @@ function* logIn({ email, password }) {
       });
 
     if (result.status === 200) {
-      yield put({ type: 'LOG_IN_SUCCESS' });
+      yield put({ type: 'SIGN_UP_SUCCESS' });
     } else {
-      yield put({ type: 'LOG_IN_FAILURE' });
+      yield put({ type: 'SIGN_UP_FAILURE' });
     }
   } catch (error) {
-    yield put({ type: 'LOG_IN_FAILURE' });
+    yield put({ type: 'SIGN_UP_FAILURE' });
   }
 }
 
 export default [
-  takeLatest('LOG_IN', logIn),
+  takeLatest('SIGN_UP', signUp),
 ];

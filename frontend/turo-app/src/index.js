@@ -8,7 +8,7 @@ import { logger } from 'redux-logger';
 import reducer from './reducers/index';
 import * as serviceWorker from './serviceWorker';
 import App from './App';
-import rootSaga from './sagas/login';
+import rootSaga from './sagas/index';
 
 // // create the saga middleware
 const sagaMiddleware = createSagaMiddleware();

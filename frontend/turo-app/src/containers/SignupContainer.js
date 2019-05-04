@@ -1,14 +1,14 @@
 import { connect } from 'react-redux';
-import logIn from '../actions/login';
+import signUp from '../actions/signup';
 import SignUp from '../components/SignUp';
 
-const mapStateToProps = () => ({
-  // isLoggedIn: state.user !== null,
+const mapStateToProps = state => ({
+  signUpSuccess: state.signUp.success,
 });
 
-const mapDispatchToProps = {
-  logIn,
-};
+const mapDispatchToProps = dispatch => ({
+  onSignUp: (email, password) => dispatch(signUp(email, password)),
+});
 
 export default connect(
   mapStateToProps,
