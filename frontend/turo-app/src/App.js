@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import LoginContainer from './containers/LoginContainer';
 import SignupContainer from './containers/SignupContainer';
+import ConfirmationContainer from './containers/ConfirmationContainer';
 import ProfileContainer from './containers/ProfileContainer';
 import HeaderContainer from './containers/HeaderContainer';
 import HomeContainer from './containers/HomeContainer';
@@ -18,6 +19,7 @@ const App = () => (
         <Route path="/" component={HomeContainer} />
         <Route path="/login" component={LoginContainer} />
         <Route path="/signup" component={SignupContainer} />
+        <Route path="/confirm" component={ConfirmationContainer} />
         <Route path="/profile" component={ProfileContainer} />
       </div>
     </div>
