@@ -1,16 +1,14 @@
 import { combineReducers } from 'redux';
 
-const failed = (state = false, action) => {
+const user = (state = null, action) => {
   switch (action.type) {
     case 'LOG_IN_SUCCESS':
-      return false;
-    case 'LOG_IN_FAILURE':
-      return true;
+      return action.user;
     default:
       return state;
   }
 };
 
 export default combineReducers({
-  failed,
+  user,
 });

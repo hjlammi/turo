@@ -59,11 +59,11 @@ app.post('/users/login', async (req, res) => {
   const { email, password } = req.body;
 
   await withDb(async (db) => {
-    const result = await userService.login(db, email, password);
-    if (result) {
-      res.send(200);
+    const user = await userService.login(db, email, password);
+    if (user) {
+      res.json(user).sendStatus(200);
     } else {
-      res.send(400);
+      res.send(403);
     }
   });
 });

@@ -27,19 +27,23 @@ describe('User authentication', function () {
 
   it('fails with an unknown user', async function () {
     const result = await user.authenticate(db, 'essi@example.com', 'secret_password');
-    expect(result).to.equal(false);
+    expect(result).to.equal(null);
   });
 
   it('fails with a wrong password', async function () {
     await user.create(db, 'essi@example.com', 'secret_password');
     const result = await user.authenticate(db, 'essi@example.com', 'wrong_password');
-    expect(result).to.equal(false);
+    expect(result).to.equal(null);
   });
 
   it('succeeds with the correct password', async function () {
     await user.create(db, 'essi@example.com', 'secret_password');
     const result = await user.authenticate(db, 'essi@example.com', 'secret_password');
-    expect(result).to.equal(true);
+    const userResult = {
+      username: null,
+      email: 'essi@example.com',
+    };
+    expect(result).to.deep.equal(userResult);
   });
 
   it('fails when tries to create a user with an existing username', async function () {

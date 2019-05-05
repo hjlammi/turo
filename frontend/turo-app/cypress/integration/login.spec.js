@@ -1,5 +1,3 @@
-/// <reference types="Cypress" />
-
 context('Login', () => {
   before(() => {
     cy.request('DELETE', 'http://localhost:4000/e2e/users');

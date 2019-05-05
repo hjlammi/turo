@@ -24,8 +24,17 @@ exports.authenticate = async (db, email, password) => {
   if (!user) {
     // Protect against timing-based user enumeration
     await bcrypt.compare('dummy_password', dummyHash);
-    return false;
+    return null;
   }
 
-  return bcrypt.compare(password, user.password);
+  const result = await bcrypt.compare(password, user.password);
+
+  if (result) {
+    return {
+      username: user.username,
+      email: user.email,
+    };
+  }
+
+  return null;
 };
