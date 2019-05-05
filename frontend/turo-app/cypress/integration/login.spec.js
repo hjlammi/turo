@@ -20,7 +20,7 @@ context('Login', () => {
     // (We don't want to tell a possible attacker which one was correct.)
     it('should show error message when logging in with invalid credentials', () => {
       cy.get('#email').type('alice@example.com');
-      cy.get('#password').type('wrong_password');
+      cy.get('#password').should('have.attr', 'type', 'password').type('wrong_password');
       cy.get('#loginButton').click();
 
       cy.get('.error').should('have.text', 'Wrong email or password!');

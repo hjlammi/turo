@@ -51,8 +51,8 @@ export default class Login extends React.Component {
           }}
         >
           <h2>Login</h2>
-          <Field fieldLabel="Email" id="email" onChange={(e) => { this.handleChange(e, 'email'); }} />
-          <Field fieldLabel="Password" id="password" onChange={(e) => { this.handleChange(e, 'password'); }} />
+          <Field fieldLabel="Email" id="email" type="email" onChange={(e) => { this.handleChange(e, 'email'); }} />
+          <Field fieldLabel="Password" type="password" id="password" onChange={(e) => { this.handleChange(e, 'password'); }} />
           <CustomButton buttonText="Login" id="loginButton" disabled={buttonDisabled} />
         </form>
         <Link to="/signup" className="link">Sign up</Link>

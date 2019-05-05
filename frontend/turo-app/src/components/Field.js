@@ -6,19 +6,23 @@ const Field = (props) => {
     fieldLabel: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     onChange: PropTypes.func,
+    type: PropTypes.string,
   };
 
-  const { fieldLabel, id, onChange } = props;
+  const {
+    fieldLabel, id, onChange, type,
+  } = props;
 
   Field.defaultProps = {
     onChange,
+    type: 'text',
   };
 
   return (
     <div className="field">
       <label type="label" htmlFor={id} className="label">
         {fieldLabel}
-        <input type="text" className="input" id={id} onChange={onChange} />
+        <input type={type} className="input" id={id} onChange={onChange} />
       </label>
     </div>
   );
