@@ -23,6 +23,8 @@ export default class Login extends React.Component {
 
   render() {
     const { isLoggedIn } = this.props;
+    const { email, password } = this.state;
+    const buttonDisabled = email === '' || password === '';
 
     if (isLoggedIn) {
       return <Redirect to={{ pathname: '/' }} />;
@@ -44,7 +46,6 @@ export default class Login extends React.Component {
           method="post"
           onSubmit={(e) => {
             e.preventDefault();
-            const { email, password } = this.state;
             const { onLogin } = this.props;
             onLogin(email, password);
           }}
@@ -52,7 +53,7 @@ export default class Login extends React.Component {
           <h2>Login</h2>
           <Field fieldLabel="Email" id="email" onChange={(e) => { this.handleChange(e, 'email'); }} />
           <Field fieldLabel="Password" id="password" onChange={(e) => { this.handleChange(e, 'password'); }} />
-          <CustomButton buttonText="Login" id="loginButton" />
+          <CustomButton buttonText="Login" id="loginButton" disabled={buttonDisabled} />
         </form>
         <Link to="/signup" className="link">Sign up</Link>
       </div>
