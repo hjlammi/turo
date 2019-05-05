@@ -48,9 +48,9 @@ app.post('/users/register', async (req, res) => {
   await withDb(async (db) => {
     const result = await userService.register(db, email, password);
     if (result) {
-      res.send(200);
+      res.sendStatus(200);
     } else {
-      res.send(400);
+      res.sendStatus(400);
     }
   });
 });
@@ -63,7 +63,7 @@ app.post('/users/login', async (req, res) => {
     if (user) {
       res.json(user).sendStatus(200);
     } else {
-      res.send(403);
+      res.sendStatus(403);
     }
   });
 });
@@ -77,7 +77,7 @@ if (process.env.E2E_API_ENABLED) {
   app.delete('/e2e/users', async (req, res) => {
     await withDb(async (db) => {
       await e2eUserService.deleteAll(db);
-      res.send(200);
+      res.sendStatus(200);
     });
   });
 }
