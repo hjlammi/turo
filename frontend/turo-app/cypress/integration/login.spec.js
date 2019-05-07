@@ -1,7 +1,7 @@
 context('Login', () => {
   before(() => {
     cy.request('DELETE', 'http://localhost:4000/e2e/users');
-    cy.request('POST', 'http://localhost:4000/users/register', { email: 'alice@example.com', password: 'alices_password' });
+    cy.request('POST', 'http://localhost:4000/users/register', { username: 'alice', email: 'alice@example.com', password: 'alices_password' });
   });
 
   beforeEach(() => {

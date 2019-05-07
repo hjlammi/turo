@@ -1,5 +1,6 @@
-const signUp = (email, password) => ({
+const signUp = (username, email, password) => ({
   type: 'SIGN_UP',
+  username,
   email,
   password,
 });

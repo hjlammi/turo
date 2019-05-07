@@ -8,6 +8,7 @@ export default class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      username: '',
       email: '',
       password1: '',
       password2: '',
@@ -39,26 +40,35 @@ export default class SignUp extends React.Component {
   render() {
     const { password1, passwordLength } = this.state;
     const buttonDisabled = password1 === '' || this.mismatchingPasswords() || passwordLength < 10;
-    const { signUpSuccess } = this.props;
+    const { signUpStatus } = this.props;
 
     // TODO: Show error message when too short password
     // TODO: Sanitizing for email and password
 
-    if (signUpSuccess) {
+    if (signUpStatus === 'ACCOUNT_CREATED') {
       return <Redirect to={{ pathname: '/confirm' }} />;
     }
+
+    const errorMsg = signUpStatus === 'USERNAME_TAKEN' ? (
+      <p className="error">The username is already taken! Choose another username!</p>
+    ) : (
+      <p />
+    );
+
     return (
       <form
         className="form"
         method="post"
         onSubmit={(e) => {
           e.preventDefault();
-          const { email } = this.state;
+          const { email, username } = this.state;
           const { onSignUp } = this.props;
-          onSignUp(email, password1);
+          onSignUp(username, email, password1);
         }}
       >
         <h2>Sign up</h2>
+        {errorMsg}
+        <Field fieldLabel="Username" id="username" onChange={(e) => { this.handleChange(e, 'username'); }} />
         <Field fieldLabel="Email" id="email" onChange={(e) => { this.handleChange(e, 'email'); }} />
         <Field fieldLabel="Password" id="password1" onChange={(e) => { this.handleChange(e, 'password1'); }} />
         <Field fieldLabel="Confirm password" id="password2" onChange={(e) => { this.handleChange(e, 'password2'); }} />
@@ -70,5 +80,5 @@ export default class SignUp extends React.Component {
 
 SignUp.propTypes = {
   onSignUp: PropTypes.func.isRequired,
-  signUpSuccess: PropTypes.bool.isRequired,
+  signUpStatus: PropTypes.string.isRequired,
 };

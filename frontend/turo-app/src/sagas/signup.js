@@ -1,26 +1,31 @@
 import { put, takeLatest } from 'redux-saga/effects';
 
-function* signUp({ email, password }) {
+function* signUp({ username, email, password }) {
   try {
-    const result = yield fetch('http://localhost:4000/users/register',
+    const response = yield fetch('http://localhost:4000/users/register',
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          username,
           email,
           password,
         }),
       });
 
-    if (result.status === 200) {
-      yield put({ type: 'SIGN_UP_SUCCESS' });
+    const message = yield response.json();
+
+    if (response.status === 200) {
+      yield put({ type: 'SIGN_UP_SUCCESS', message });
+    } else if (response.status === 409) {
+      yield put({ type: 'SIGN_UP_FAILURE', message });
     } else {
-      yield put({ type: 'SIGN_UP_FAILURE' });
+      yield put({ type: 'SIGN_UP_FAILURE', message });
     }
   } catch (error) {
-    yield put({ type: 'SIGN_UP_FAILURE' });
+    yield put({ type: 'SIGN_UP_FAILURE', message: error });
   }
 }
 
