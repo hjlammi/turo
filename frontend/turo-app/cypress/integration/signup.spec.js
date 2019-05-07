@@ -65,6 +65,17 @@ context('SignUp', () => {
       cy.get('.error').should('have.text', 'The username is already taken! Choose another username!');
     });
 
+    // She also tries to sign up with an already registered email address and is shown an error message.
+    it('should tell that the chosen username is already taken', () => {
+      cy.get('#username').type('ali');
+      cy.get('#email').type('alice_other@example.com');
+      cy.get('#password1').type('alices_password');
+      cy.get('#password2').type('alices_password');
+      cy.get('.form').find('button').should('not.be.disabled').click();
+      cy.location('hash').should('eq', '#/signup');
+      cy.get('.error').should('have.text', 'The email is already registered!');
+    });
+
     // Alice finally manages to sign up successfully with a long enough password typed the same way both times.
     it('should sign up with a new customer and same password twice', () => {
       cy.get('#username').type('ali');
