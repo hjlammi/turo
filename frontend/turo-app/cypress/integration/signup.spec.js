@@ -31,7 +31,7 @@ context('SignUp', () => {
     // Alice tries to sign up by providing her email address and the same password twice
     // but her password is less than 10 characters long i.e. too short so the sign up button remains disabled.
     it('should have a disabled button when the password is too short', () => {
-      cy.get('#email').type('elli@example.com');
+      cy.get('#email').type('alice@example.com');
       cy.get('#password1').type('short');
       cy.get('#password2').type('short');
       cy.get('.form')
@@ -56,7 +56,22 @@ context('SignUp', () => {
       cy.get('#password1').type('alices_password');
       cy.get('#password2').type('alices_password');
       cy.get('.form').find('button').should('not.be.disabled').click();
+      // Alice is then redirected to the confirmation page.
       cy.location('hash').should('eq', '#/confirm');
     });
   })
+
+  // From the confirmation page Alice can travel to login page by clicking Login link.
+  describe('confirmation page', () => {
+    beforeEach(() => {
+      cy.visit('http://localhost:3000/#/confirm');
+    });
+
+    it('should have a link to the login page', () => {
+      cy.get('.link')
+        .should('have.text', 'Login')
+        .click();
+      cy.location('hash').should('eq', '#/login');
+    });
+  });
 })
