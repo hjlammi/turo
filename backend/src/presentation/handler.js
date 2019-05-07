@@ -46,11 +46,15 @@ app.post('/users/register', async (req, res) => {
   const { username, email, password } = req.body;
 
   await withDb(async (db) => {
-    const result = await userService.register(db, email, password);
-    if (result) {
-      res.sendStatus(200);
+    const result = await userService.register(db, username, email, password);
+    if (result.success) {
+      res.status(200).json({ success: result.success });
+    } else if (result.error === 'USERNAME_TAKEN') {
+      res.status(409).json({ error: result.error });
+    } else if (result.error === 'EMAIL_TAKEN') {
+      res.status(409).json({ error: result.error });
     } else {
-      res.sendStatus(400);
+      res.sendStatus(500);
     }
   });
 });
@@ -63,7 +67,7 @@ app.post('/users/login', async (req, res) => {
     if (user) {
       res.json(user).sendStatus(200);
     } else {
-      res.sendStatus(404);
+      res.sendStatus(400);
     }
   });
 });

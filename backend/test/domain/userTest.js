@@ -31,25 +31,19 @@ describe('User authentication', function () {
   });
 
   it('fails with a wrong password', async function () {
-    await user.create(db, 'mary@example.com', 'secret_password');
+    await user.create(db, 'mary', 'mary@example.com', 'secret_password');
     const result = await user.authenticate(db, 'mary@example.com', 'wrong_password');
     expect(result).to.equal(null);
   });
 
   it('succeeds with the correct password', async function () {
-    await user.create(db, 'mary@example.com', 'secret_password');
+    await user.create(db, 'mary', 'mary@example.com', 'secret_password');
     const result = await user.authenticate(db, 'mary@example.com', 'secret_password');
     const userResult = {
-      username: null,
+      username: 'mary',
       email: 'mary@example.com',
     };
     expect(result).to.deep.equal(userResult);
-  });
-
-  it('fails when tries to create a user with an existing username', async function () {
-    await user.create(db, 'mary@example.com', 'secret_password');
-    const result = await user.create(db, 'mary@example.com', 'secret_password');
-    expect(result).to.equal(false);
   });
 });
 
@@ -77,14 +71,26 @@ describe('User creation', function () {
   });
 
   it('fails when tries to create a user with an existing username', async function () {
-    await user.create(db, 'mary@example.com', 'secret_password');
-    const result = await user.create(db, 'mary@example.com', 'secret_password');
-    expect(result).to.equal(false);
+    await user.create(db, 'mary', 'mary@example.com', 'secret_password');
+    const result = await user.create(db, 'mary', 'other_mary@example.com', 'secret_password');
+    expect(result).to.deep.equal({ error: 'USERNAME_TAKEN' });
   });
 
   it('succeeds with a non-existing username', async function () {
-    await user.create(db, 'another_user@example.com', 'another_password');
-    const result = await user.create(db, 'mary@example.com', 'secret_password');
-    expect(result).to.equal(true);
+    await user.create(db, 'another_user', 'another_user@example.com', 'another_password');
+    const result = await user.create(db, 'mary', 'mary@example.com', 'secret_password');
+    expect(result).to.deep.equal({ success: 'ACCOUNT_CREATED' });
+  });
+
+  it('fails when tries to create a user with an existing email', async function () {
+    await user.create(db, 'mary', 'mary@example.com', 'secret_password');
+    const result = await user.create(db, 'mary2', 'mary@example.com', 'secret_password');
+    expect(result).to.deep.equal({ error: 'EMAIL_TAKEN' });
+  });
+
+  it('succeeds with a non-existing email', async function () {
+    await user.create(db, 'another_user', 'another_user@example.com', 'another_password');
+    const result = await user.create(db, 'mary', 'mary@example.com', 'secret_password');
+    expect(result).to.deep.equal({ success: 'ACCOUNT_CREATED' });
   });
 });
