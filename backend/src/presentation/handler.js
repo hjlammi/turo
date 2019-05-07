@@ -43,7 +43,7 @@ const withDb = async (f) => {
 };
 
 app.post('/users/register', async (req, res) => {
-  const { email, password } = req.body;
+  const { username, email, password } = req.body;
 
   await withDb(async (db) => {
     const result = await userService.register(db, email, password);
@@ -63,7 +63,7 @@ app.post('/users/login', async (req, res) => {
     if (user) {
       res.json(user).sendStatus(200);
     } else {
-      res.sendStatus(403);
+      res.sendStatus(404);
     }
   });
 });
