@@ -26,29 +26,29 @@ describe('User authentication', function () {
   });
 
   it('fails with an unknown user', async function () {
-    const result = await user.authenticate(db, 'essi@example.com', 'secret_password');
+    const result = await user.authenticate(db, 'mary@example.com', 'secret_password');
     expect(result).to.equal(null);
   });
 
   it('fails with a wrong password', async function () {
-    await user.create(db, 'essi@example.com', 'secret_password');
-    const result = await user.authenticate(db, 'essi@example.com', 'wrong_password');
+    await user.create(db, 'mary@example.com', 'secret_password');
+    const result = await user.authenticate(db, 'mary@example.com', 'wrong_password');
     expect(result).to.equal(null);
   });
 
   it('succeeds with the correct password', async function () {
-    await user.create(db, 'essi@example.com', 'secret_password');
-    const result = await user.authenticate(db, 'essi@example.com', 'secret_password');
+    await user.create(db, 'mary@example.com', 'secret_password');
+    const result = await user.authenticate(db, 'mary@example.com', 'secret_password');
     const userResult = {
       username: null,
-      email: 'essi@example.com',
+      email: 'mary@example.com',
     };
     expect(result).to.deep.equal(userResult);
   });
 
   it('fails when tries to create a user with an existing username', async function () {
-    await user.create(db, 'essi@example.com', 'secret_password');
-    const result = await user.create(db, 'essi@example.com', 'secret_password');
+    await user.create(db, 'mary@example.com', 'secret_password');
+    const result = await user.create(db, 'mary@example.com', 'secret_password');
     expect(result).to.equal(false);
   });
 });
@@ -77,14 +77,14 @@ describe('User creation', function () {
   });
 
   it('fails when tries to create a user with an existing username', async function () {
-    await user.create(db, 'essi@example.com', 'secret_password');
-    const result = await user.create(db, 'essi@example.com', 'secret_password');
+    await user.create(db, 'mary@example.com', 'secret_password');
+    const result = await user.create(db, 'mary@example.com', 'secret_password');
     expect(result).to.equal(false);
   });
 
   it('succeeds with a non-existing username', async function () {
     await user.create(db, 'another_user@example.com', 'another_password');
-    const result = await user.create(db, 'essi@example.com', 'secret_password');
+    const result = await user.create(db, 'mary@example.com', 'secret_password');
     expect(result).to.equal(true);
   });
 });
