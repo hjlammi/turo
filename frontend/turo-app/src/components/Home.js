@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import '../css/content.css';
+import '../css/container.css';
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -18,7 +18,7 @@ export default class Home extends React.Component {
     }
 
     return (
-      <div className="home content">
+      <div className="home container">
         <h1>Home lolol</h1>
       </div>
     );

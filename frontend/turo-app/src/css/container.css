@@ -1,0 +1,31 @@
+.container {
+  max-width: 60%;
+  margin: 0 auto;
+  text-align: left;
+  line-height: 1.6;
+}
+
+.form {
+  max-width: 60%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+}
+
+.form > div {
+  grid-column: 1 / 5;
+}
+
+.form > button {
+  line-height: 2;
+  grid-column: 4 / 5;
+}
+
+.form > .link {
+  grid-column: 4 / 5;
+}
+
+.error {
+  color: red;
+}

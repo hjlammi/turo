@@ -3,7 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Field from './Field';
 import CustomButton from './CustomButton';
-import '../css/login.css';
+import '../css/container.css';
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -39,8 +39,7 @@ export default class Login extends React.Component {
     );
 
     return (
-      <div>
-        { errorMsg }
+      <div className="container">
         <form
           className="form"
           method="post"

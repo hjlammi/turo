@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../css/content.css';
+import '../css/container.css';
 
 export default class Confirmation extends React.Component {
   constructor(props) {
@@ -11,7 +11,7 @@ export default class Confirmation extends React.Component {
 
   render() {
     return (
-      <div className="confirmation content">
+      <div className="confirmation container">
         <p>Thanks for signing up!</p>
         <Link to="/login" className="link">Login</Link>
       </div>

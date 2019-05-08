@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import Field from './Field';
 import CustomButton from './CustomButton';
+import '../css/container.css';
 
 export default class SignUp extends React.Component {
   constructor(props) {
@@ -58,24 +59,26 @@ export default class SignUp extends React.Component {
     }
 
     return (
-      <form
-        className="form"
-        method="post"
-        onSubmit={(e) => {
-          e.preventDefault();
-          const { email, username } = this.state;
-          const { onSignUp } = this.props;
-          onSignUp(username, email, password1);
-        }}
-      >
-        <h2>Sign up</h2>
-        {errorMsg}
-        <Field fieldLabel="Username" id="username" onChange={(e) => { this.handleChange(e, 'username'); }} />
-        <Field fieldLabel="Email" id="email" onChange={(e) => { this.handleChange(e, 'email'); }} />
-        <Field fieldLabel="Password" id="password1" onChange={(e) => { this.handleChange(e, 'password1'); }} />
-        <Field fieldLabel="Confirm password" id="password2" onChange={(e) => { this.handleChange(e, 'password2'); }} />
-        <CustomButton buttonText="Sign up" id="signup" disabled={buttonDisabled} />
-      </form>
+      <div className="container">
+        <form
+          className="form"
+          method="post"
+          onSubmit={(e) => {
+            e.preventDefault();
+            const { email, username } = this.state;
+            const { onSignUp } = this.props;
+            onSignUp(username, email, password1);
+          }}
+        >
+          <h2>Sign up</h2>
+          {errorMsg}
+          <Field fieldLabel="Username" id="username" onChange={(e) => { this.handleChange(e, 'username'); }} />
+          <Field fieldLabel="Email" id="email" onChange={(e) => { this.handleChange(e, 'email'); }} />
+          <Field fieldLabel="Password" id="password1" onChange={(e) => { this.handleChange(e, 'password1'); }} />
+          <Field fieldLabel="Confirm password" id="password2" onChange={(e) => { this.handleChange(e, 'password2'); }} />
+          <CustomButton buttonText="Sign up" id="signup" disabled={buttonDisabled} />
+        </form>
+      </div>
     );
   }
 }

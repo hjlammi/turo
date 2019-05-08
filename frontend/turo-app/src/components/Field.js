@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import '../css/field.css';
+
 
 const Field = (props) => {
   Field.propTypes = {

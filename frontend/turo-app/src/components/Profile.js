@@ -1,5 +1,5 @@
 import React from 'react';
-import '../css/content.css';
+import '../css/container.css';
 
 export default class Profile extends React.Component {
   constructor(props) {
@@ -10,7 +10,7 @@ export default class Profile extends React.Component {
 
   render() {
     return (
-      <div className="profile content">
+      <div className="profile container">
         <h2>Profile</h2>
         <h3>Username</h3>
         <h3>E-mail address</h3>

@@ -1,0 +1,12 @@
+.label {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.label > div {
+  grid-column: 1 / 2;
+}
+
+.label > input {
+  grid-column: 2 / 5;
+}
