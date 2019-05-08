@@ -6,16 +6,20 @@ const CustomButton = (props) => {
     buttonText: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     disabled: PropTypes.bool,
+    onClick: PropTypes.func,
   };
-
-  const { buttonText, id, disabled } = props;
 
   CustomButton.defaultProps = {
     disabled: false,
+    onClick: () => {},
   };
 
+  const {
+    buttonText, id, disabled, onClick,
+  } = props;
+
   return (
-    <button className="button" id={id} type="submit" disabled={disabled}>
+    <button className="button" id={id} type="submit" disabled={disabled} onClick={onClick}>
       {buttonText}
     </button>
   );

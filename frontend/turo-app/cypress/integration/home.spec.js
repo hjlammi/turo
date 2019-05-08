@@ -15,13 +15,21 @@ context('Home', () => {
       cy.get('.header').should('not.have.text', 'Welcome to turo-app!');
     })
 
-    // When Alice wants to log out from the application she clicks the "Log out" link
-    // on the right side of the header and is logged out of the application and redirected to the login page.
+  })
+
+  // There is an input field for writing a post and Alice decides to write her first post.
+  describe('writing a post', () => {
+    it('should show a new post on top of the posts feed', () => {
+      cy.get('#post').type('This is my first post, yay!');
+    })
+  });
+
+  // When Alice wants to log out from the application she clicks the "Log out" link
+  // on the right side of the header and is logged out of the application and redirected to the login page.
+  describe('logging out', () => {
     it('should not redirect to the login page when log out link is clicked', () => {
       cy.get('.header .link').click();
       cy.location('hash').should('eq', '#/login');
-    })
+    });
   })
-
-
 })
