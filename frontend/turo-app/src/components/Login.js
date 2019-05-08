@@ -32,11 +32,11 @@ export default class Login extends React.Component {
 
     // Error message if email or password were incorrect.
     const { logInError } = this.props;
-    const errorMsg = logInError ? (
-      <p className="error">Wrong email or password!</p>
-    ) : (
-      <p />
-    );
+    let errorMsg = <div className="error" />;
+
+    if (logInError) {
+      errorMsg = <div className="error">Wrong email or password!</div>;
+    }
 
     return (
       <div className="container">
@@ -50,6 +50,7 @@ export default class Login extends React.Component {
           }}
         >
           <h2>Login</h2>
+          { errorMsg }
           <Field fieldLabel="Email" id="email" type="email" onChange={(e) => { this.handleChange(e, 'email'); }} />
           <Field fieldLabel="Password" type="password" id="password" onChange={(e) => { this.handleChange(e, 'password'); }} />
           <CustomButton buttonText="Login" id="loginButton" disabled={buttonDisabled} />

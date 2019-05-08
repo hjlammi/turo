@@ -50,12 +50,12 @@ export default class SignUp extends React.Component {
       return <Redirect to={{ pathname: '/confirm' }} />;
     }
 
-    let errorMsg = <p />;
+    let errorMsg = <div className="error" />;
 
     if (signUpStatus === 'USERNAME_TAKEN') {
-      errorMsg = <p className="error">The username is already taken! Choose another username!</p>;
+      errorMsg = <div className="error">The username is already taken! Choose another username!</div>;
     } else if (signUpStatus === 'EMAIL_TAKEN') {
-      errorMsg = <p className="error">The email is already registered!</p>;
+      errorMsg = <div className="error">The email is already registered!</div>;
     }
 
     return (
