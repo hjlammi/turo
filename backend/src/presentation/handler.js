@@ -72,6 +72,11 @@ app.post('/users/login', async (req, res) => {
   });
 });
 
+app.post('/users/logout', async (req, res) => {
+  req.session.destroy();
+  res.send(200);
+});
+
 // Used only in dev env for emptying db for tests.
 // Must be disabled for production!
 if (process.env.E2E_API_ENABLED) {
