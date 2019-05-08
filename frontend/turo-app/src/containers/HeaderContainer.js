@@ -1,7 +1,8 @@
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 
-const mapStateToProps = () => ({
+const mapStateToProps = state => ({
+  isLoggedIn: state.global.user != null,
 });
 
 const mapDispatchToProps = () => ({

@@ -1,0 +1,19 @@
+.header {
+  background-color: #282c34;
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.header h1 {
+  color: white;
+  align-self: center;
+}
+
+.header .link {
+  color: white;
+  align-self: right;
+}
