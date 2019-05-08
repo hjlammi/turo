@@ -23,7 +23,7 @@ const Field = (props) => {
   return (
     <div className="field">
       <label type="label" htmlFor={id} className="label">
-        {fieldLabel}
+        <div>{fieldLabel}</div>
         <input type={type} className="input" id={id} onChange={onChange} />
       </label>
     </div>
