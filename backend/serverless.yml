@@ -81,6 +81,12 @@ functions:
       - http:
           path: posts/create
           method: post
+  fetchAll:
+    handler: src/presentation/handler.handler
+    events:
+      - http:
+          path: posts/all
+          method: get
   e2eDeleteAll:
     handler: src/presentation/handler.handler
     events:

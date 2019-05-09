@@ -105,4 +105,15 @@ app.post('/posts/create', async (req, res) => {
   });
 });
 
+app.get('/posts/all', async (req, res) => {
+  await withDb(async (db) => {
+    const result = await postService.fetchAll(db);
+    if (result) {
+      res.json(result).sendStatus(200);
+    } else {
+      res.sendStatus(500);
+    }
+  });
+});
+
 module.exports.handler = serverless(app);

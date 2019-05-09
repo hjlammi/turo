@@ -13,6 +13,11 @@ export default class Home extends React.Component {
     };
   }
 
+  componentDidMount() {
+    const { fetchPosts } = this.props;
+    fetchPosts();
+  }
+
   handlePost = (event) => {
     this.setState({
       post: event.target.value,
@@ -54,6 +59,7 @@ Home.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   onSubmitPost: PropTypes.func.isRequired,
   userId: PropTypes.number,
+  fetchPosts: PropTypes.func.isRequired,
 };
 
 Home.defaultProps = {
