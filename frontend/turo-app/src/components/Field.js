@@ -9,10 +9,11 @@ const Field = (props) => {
     id: PropTypes.string.isRequired,
     onChange: PropTypes.func,
     type: PropTypes.string,
+    value: PropTypes.string.isRequired,
   };
 
   const {
-    fieldLabel, id, onChange, type,
+    fieldLabel, id, onChange, type, value,
   } = props;
 
   Field.defaultProps = {
@@ -24,7 +25,7 @@ const Field = (props) => {
     <div className="field">
       <label type="label" htmlFor={id} className="label">
         <div>{fieldLabel}</div>
-        <input type={type} className="input" id={id} onChange={onChange} />
+        <input type={type} className="input" id={id} value={value} onChange={onChange} />
       </label>
     </div>
   );

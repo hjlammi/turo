@@ -24,6 +24,12 @@ export default class Home extends React.Component {
     });
   }
 
+  resetInput = () => {
+    this.setState({
+      post: '',
+    });
+  }
+
   render() {
     const {
       isLoggedIn, userId, onSubmitPost,
@@ -39,7 +45,7 @@ export default class Home extends React.Component {
     return (
       <div className="home container">
         <div>
-          <Field fieldLabel="Write something" id="post" type="text" onChange={(e) => { this.handlePost(e); }} />
+          <Field fieldLabel="Write something" id="post" type="text" value={post} onChange={(e) => { this.handlePost(e); }} />
           <CustomButton
             buttonText="Post"
             id="postButton"
@@ -47,6 +53,7 @@ export default class Home extends React.Component {
             onClick={(e) => {
               e.preventDefault();
               onSubmitPost(post, userId);
+              this.resetInput();
             }}
           />
         </div>
