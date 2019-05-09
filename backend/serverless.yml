@@ -75,6 +75,12 @@ functions:
       - http:
           path: users/logout
           method: post
+  createPost:
+    handler: src/presentation/handler.handler
+    events:
+      - http:
+          path: posts/create
+          method: post
   e2eDeleteAll:
     handler: src/presentation/handler.handler
     events:

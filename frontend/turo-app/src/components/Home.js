@@ -20,7 +20,9 @@ export default class Home extends React.Component {
   }
 
   render() {
-    const { isLoggedIn, onSubmitPost } = this.props;
+    const {
+      isLoggedIn, userId, onSubmitPost,
+    } = this.props;
     const { post } = this.state;
 
     if (!isLoggedIn) {
@@ -39,7 +41,7 @@ export default class Home extends React.Component {
             disabled={buttonDisabled}
             onClick={(e) => {
               e.preventDefault();
-              onSubmitPost(post);
+              onSubmitPost(post, userId);
             }}
           />
         </div>
@@ -51,4 +53,9 @@ export default class Home extends React.Component {
 Home.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   onSubmitPost: PropTypes.func.isRequired,
+  userId: PropTypes.number,
+};
+
+Home.defaultProps = {
+  userId: null,
 };

@@ -6,6 +6,7 @@ const session = require('express-session');
 const PGSession = require('connect-pg-simple')(session);
 
 const userService = require('../application/userService');
+const postService = require('../application/postService');
 
 const dbPool = new pg.Pool({
   host: 'localhost',
@@ -90,5 +91,18 @@ if (process.env.E2E_API_ENABLED) {
     });
   });
 }
+
+app.post('/posts/create', async (req, res) => {
+  const { post, userId } = req.body;
+
+  await withDb(async (db) => {
+    const result = await postService.create(db, post, userId);
+    if (result) {
+      res.sendStatus(200);
+    } else {
+      res.sendStatus(500);
+    }
+  });
+});
 
 module.exports.handler = serverless(app);

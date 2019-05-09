@@ -1,8 +1,8 @@
 import { put, takeLatest } from 'redux-saga/effects';
 
-function* submitPost({ post }) {
+function* createPost({ post, userId }) {
   try {
-    const response = yield fetch('http://localhost:4000/posts/submit',
+    const response = yield fetch('http://localhost:4000/posts/create',
       {
         method: 'POST',
         headers: {
@@ -10,20 +10,20 @@ function* submitPost({ post }) {
         },
         body: JSON.stringify({
           post,
+          userId,
         }),
       });
 
     if (response.status === 200) {
-      const user = yield response.json();
-      yield put({ type: 'SUBMIT_POST_SUCCESS', user });
+      yield put({ type: 'CREATE_POST_SUCCESS' });
     } else {
-      yield put({ type: 'SUBMIT_POST_FAILURE' });
+      yield put({ type: 'CREATE_POST_FAILURE' });
     }
   } catch (error) {
-    yield put({ type: 'SUBMIT_POST_FAILURE' });
+    yield put({ type: 'CREATE_POST_FAILURE' });
   }
 }
 
 export default [
-  takeLatest('SUBMIT_POST', submitPost),
+  takeLatest('CREATE_POST', createPost),
 ];
