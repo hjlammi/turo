@@ -1,4 +1,5 @@
 import { put, takeLatest } from 'redux-saga/effects';
+import fetchPosts from '../actions/fetchPosts';
 
 function* createPost({ post, userId }) {
   try {
@@ -16,6 +17,7 @@ function* createPost({ post, userId }) {
 
     if (response.status === 200) {
       yield put({ type: 'CREATE_POST_SUCCESS' });
+      yield put(fetchPosts());
     } else {
       yield put({ type: 'CREATE_POST_FAILURE' });
     }
