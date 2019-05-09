@@ -14,6 +14,11 @@ export default class Login extends React.Component {
     };
   }
 
+  componentDidMount() {
+    const { onLoad } = this.props;
+    onLoad();
+  }
+
   // Event handler that passes the texts written in the input fields to the component state.
   handleChange = (event, field) => {
     this.setState({
@@ -62,6 +67,7 @@ export default class Login extends React.Component {
 }
 
 Login.propTypes = {
+  onLoad: PropTypes.func.isRequired,
   onLogin: PropTypes.func.isRequired,
   logInError: PropTypes.bool.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
