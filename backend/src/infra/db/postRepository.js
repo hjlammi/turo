@@ -18,7 +18,7 @@ exports.findById = async (db, id) => {
 
 exports.fetchAll = async (db) => {
   const result = await db.query(
-    'SELECT * FROM "post" ORDER BY created DESC',
+    'SELECT content, created, username FROM "post" p, "user" u WHERE p.creator = u.id ORDER BY created DESC',
   );
 
   return result.rows;
