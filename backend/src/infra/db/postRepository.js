@@ -16,6 +16,14 @@ exports.findById = async (db, id) => {
   return result.rows[0];
 };
 
+exports.fetchAll = async (db) => {
+  const result = await db.query(
+    'SELECT * FROM "post" ORDER BY created DESC',
+  );
+
+  return result.rows;
+};
+
 exports.deleteAll = async (db) => {
   await db.query(
     'DELETE FROM post',
