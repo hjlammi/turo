@@ -39,11 +39,8 @@ describe('User authentication', function () {
   it('succeeds with the correct password', async function () {
     await user.create(db, 'mary', 'mary@example.com', 'secret_password');
     const result = await user.authenticate(db, 'mary@example.com', 'secret_password');
-    const userResult = {
-      username: 'mary',
-      email: 'mary@example.com',
-    };
-    expect(result).to.deep.equal(userResult);
+    expect(result.username).to.equal('mary');
+    expect(result.email).to.equal('mary@example.com');
   });
 });
 

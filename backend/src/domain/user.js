@@ -41,6 +41,7 @@ exports.authenticate = async (db, email, password) => {
 
   if (result) {
     return {
+      id: user.id,
       username: user.username,
       email: user.email,
     };

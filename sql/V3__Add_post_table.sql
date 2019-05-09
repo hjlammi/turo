@@ -1,8 +1,8 @@
 CREATE TABLE post (
     id SERIAL,
     content VARCHAR(500),
-    created TIMESTAMP NOT NULL,
-    creator SERIAL,
+    created TIMESTAMPTZ DEFAULT Now(),
+    creator INT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (creator) REFERENCES "user"
+    FOREIGN KEY (creator) REFERENCES "user" ON DELETE CASCADE
 );

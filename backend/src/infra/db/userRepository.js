@@ -17,10 +17,12 @@ exports.findByUsername = async (db, username) => {
 };
 
 exports.add = async (db, username, email, hashedPassword) => {
-  await db.query(
-    'INSERT INTO "user"(username, email, password) VALUES($1, $2, $3)',
+  const result = await db.query(
+    'INSERT INTO "user"(username, email, password) VALUES($1, $2, $3) RETURNING id',
     [username, email, hashedPassword],
   );
+
+  return result.rows[0];
 };
 
 exports.deleteAll = async (db) => {
