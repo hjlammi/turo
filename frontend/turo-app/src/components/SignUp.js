@@ -73,9 +73,9 @@ export default class SignUp extends React.Component {
           <h2>Sign up</h2>
           {errorMsg}
           <Field fieldLabel="Username" id="username" onChange={(e) => { this.handleChange(e, 'username'); }} />
-          <Field fieldLabel="Email" id="email" onChange={(e) => { this.handleChange(e, 'email'); }} />
-          <Field fieldLabel="Password" id="password1" onChange={(e) => { this.handleChange(e, 'password1'); }} />
-          <Field fieldLabel="Confirm password" id="password2" onChange={(e) => { this.handleChange(e, 'password2'); }} />
+          <Field fieldLabel="Email" id="email" type="email" onChange={(e) => { this.handleChange(e, 'email'); }} />
+          <Field fieldLabel="Password" id="password1" type="password" onChange={(e) => { this.handleChange(e, 'password1'); }} />
+          <Field fieldLabel="Confirm password" id="password2" type="password" onChange={(e) => { this.handleChange(e, 'password2'); }} />
           <CustomButton buttonText="Sign up" id="signup" disabled={buttonDisabled} />
         </form>
       </div>
