@@ -8,6 +8,7 @@ const mapStateToProps = state => ({
   userId: state.global.user ? state.global.user.id : null,
   username: state.global.user ? state.global.user.username : null,
   email: state.global.user ? state.global.user.email : null,
+  posts: state.home.posts,
 });
 
 const mapDispatchToProps = dispatch => ({

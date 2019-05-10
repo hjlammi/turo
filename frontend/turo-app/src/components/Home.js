@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import Field from './Field';
 import CustomButton from './CustomButton';
+import Post from './Post';
 import '../css/container.css';
 
 export default class Home extends React.Component {
@@ -35,12 +36,21 @@ export default class Home extends React.Component {
       isLoggedIn, userId, onSubmitPost,
     } = this.props;
     const { post } = this.state;
+    const { posts } = this.props;
+    const buttonDisabled = post === '';
 
     if (!isLoggedIn) {
       return <Redirect to={{ pathname: '/login' }} />;
     }
 
-    const buttonDisabled = post === '';
+    let postItems = <p />;
+    if (posts && posts.length > 0) {
+      postItems = posts.map(postItem => (
+        <li key={`${postItem.username}_${postItem.created}`}>
+          <Post username={postItem.username} date={postItem.created} content={postItem.content} />
+        </li>
+      ));
+    }
 
     return (
       <div className="home container">
@@ -57,6 +67,10 @@ export default class Home extends React.Component {
             }}
           />
         </div>
+        <div className="posts">
+          <h1>Latest posts:</h1>
+          <ul>{postItems}</ul>
+        </div>
       </div>
     );
   }
@@ -67,8 +81,16 @@ Home.propTypes = {
   onSubmitPost: PropTypes.func.isRequired,
   userId: PropTypes.number,
   fetchPosts: PropTypes.func.isRequired,
+  posts: PropTypes.arrayOf(
+    PropTypes.shape({
+      content: PropTypes.string.isRequired,
+      created: PropTypes.string.isRequired,
+      username: PropTypes.string.isRequired,
+    }),
+  ),
 };
 
 Home.defaultProps = {
   userId: null,
+  posts: [],
 };
