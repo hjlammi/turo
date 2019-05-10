@@ -5,9 +5,7 @@ import fetchPosts from '../actions/fetchPosts';
 
 const mapStateToProps = state => ({
   isLoggedIn: state.global.user != null,
-  userId: state.global.user ? state.global.user.id : null,
-  username: state.global.user ? state.global.user.username : null,
-  email: state.global.user ? state.global.user.email : null,
+  user: state.global.user,
   posts: state.home.posts,
 });
 

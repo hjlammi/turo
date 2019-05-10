@@ -33,7 +33,7 @@ export default class Home extends React.Component {
 
   render() {
     const {
-      isLoggedIn, userId, onSubmitPost,
+      isLoggedIn, user, onSubmitPost,
     } = this.props;
     const { post } = this.state;
     const { posts } = this.props;
@@ -62,7 +62,7 @@ export default class Home extends React.Component {
             disabled={buttonDisabled}
             onClick={(e) => {
               e.preventDefault();
-              onSubmitPost(post, userId);
+              onSubmitPost(post, user.id);
               this.resetInput();
             }}
           />
@@ -79,7 +79,11 @@ export default class Home extends React.Component {
 Home.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   onSubmitPost: PropTypes.func.isRequired,
-  userId: PropTypes.number,
+  user: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    username: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+  }),
   fetchPosts: PropTypes.func.isRequired,
   posts: PropTypes.arrayOf(
     PropTypes.shape({
@@ -91,6 +95,6 @@ Home.propTypes = {
 };
 
 Home.defaultProps = {
-  userId: null,
+  user: null,
   posts: [],
 };
