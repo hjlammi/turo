@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import '../css/post.css';
+
 
 const Post = (props) => {
   Post.propTypes = {
@@ -17,9 +19,11 @@ const Post = (props) => {
 
   return (
     <div className="post">
-      {username}
-      {parsedDate}
-      {content}
+      <div>
+        <div className="username">{username}</div>
+        <div className="date">{parsedDate}</div>
+      </div>
+      <div className="content">{content}</div>
     </div>
   );
 };

@@ -53,23 +53,25 @@ export default class Home extends React.Component {
     }
 
     return (
-      <div className="home container">
-        <div>
-          <Field fieldLabel="Write something" id="post" type="text" value={post} onChange={(e) => { this.handlePost(e); }} />
-          <CustomButton
-            buttonText="Post"
-            id="postButton"
-            disabled={buttonDisabled}
-            onClick={(e) => {
-              e.preventDefault();
-              onSubmitPost(post, user.id);
-              this.resetInput();
-            }}
-          />
-        </div>
-        <div className="posts">
-          <h1>Latest posts:</h1>
-          <ul>{postItems}</ul>
+      <div className="container">
+        <div className="home">
+          <div className="form">
+            <Field fieldLabel="Write something" id="post" type="text" value={post} onChange={(e) => { this.handlePost(e); }} />
+            <CustomButton
+              buttonText="Post"
+              id="postButton"
+              disabled={buttonDisabled}
+              onClick={(e) => {
+                e.preventDefault();
+                onSubmitPost(post, user.id);
+                this.resetInput();
+              }}
+            />
+          </div>
+          <div className="posts">
+            <h1>Latest posts:</h1>
+            <ul>{postItems}</ul>
+          </div>
         </div>
       </div>
     );

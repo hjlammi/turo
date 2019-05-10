@@ -3,6 +3,7 @@
   margin: 0 auto;
   text-align: left;
   line-height: 1.6;
+  background-color: whitesmoke;
 }
 
 .form {
@@ -28,4 +29,19 @@
 
 .error {
   color: red;
+}
+
+li {
+  list-style: none;
+}
+
+.home {
+  max-width: 70%;
+  margin: 0 auto;
+}
+
+.home > .form {
+  background-color: white;
+  padding: 20px;
+  margin-bottom: 10px;
 }
