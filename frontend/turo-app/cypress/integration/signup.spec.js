@@ -19,7 +19,7 @@ context('SignUp', () => {
     // link to the sign up page.
     it('should have a link to the sign up page', () => {
       cy.location('hash').should('eq', '#/login');
-      cy.get('.link').click();
+      cy.get('.form > .link').click();
       cy.location('hash').should('eq', '#/signup');
     });
   })
@@ -95,7 +95,7 @@ context('SignUp', () => {
     });
 
     it('should have a link to the login page', () => {
-      cy.get('.link')
+      cy.get('.confirmation > .link')
         .should('have.text', 'Login')
         .click();
       cy.location('hash').should('eq', '#/login');
