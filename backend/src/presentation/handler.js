@@ -28,7 +28,7 @@ const sess = {
 };
 
 if (app.get('env') === 'production') {
-  sess.cookie.secure = true; // serve secure cookies
+  sess.cookie.secure = true;
 }
 
 app.use(session(sess));
@@ -66,7 +66,8 @@ app.post('/users/login', async (req, res) => {
   await withDb(async (db) => {
     const user = await userService.login(db, email, password);
     if (user) {
-      res.json(user).sendStatus(200);
+      sess.email = email;
+      res.json(user).status(200);
     } else {
       res.sendStatus(400);
     }
@@ -95,25 +96,33 @@ if (process.env.E2E_API_ENABLED) {
 app.post('/posts/create', async (req, res) => {
   const { post, userId } = req.body;
 
-  await withDb(async (db) => {
-    const result = await postService.create(db, post, userId);
-    if (result) {
-      res.sendStatus(200);
-    } else {
-      res.sendStatus(500);
-    }
-  });
+  if (sess.email) {
+    await withDb(async (db) => {
+      const result = await postService.create(db, post, userId);
+      if (result) {
+        res.sendStatus(200);
+      } else {
+        res.sendStatus(500);
+      }
+    });
+  } else {
+    res.sendStatus(403);
+  }
 });
 
 app.get('/posts/all', async (req, res) => {
-  await withDb(async (db) => {
-    const result = await postService.fetchAll(db);
-    if (result) {
-      res.json(result).sendStatus(200);
-    } else {
-      res.sendStatus(500);
-    }
-  });
+  if (sess.email) {
+    await withDb(async (db) => {
+      const result = await postService.fetchAll(db);
+      if (result) {
+        res.json(result).status(200);
+      } else {
+        res.sendStatus(500);
+      }
+    });
+  } else {
+    res.sendStatus(403);
+  }
 });
 
 module.exports.handler = serverless(app);
