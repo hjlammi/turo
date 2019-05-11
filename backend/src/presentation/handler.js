@@ -111,10 +111,10 @@ if (process.env.E2E_API_ENABLED) {
 }
 
 app.post('/posts', async (req, res) => {
-  const { post, userId } = req.body;
+  const { post } = req.body;
   if (req.session.userId) {
     await withDb(async (db) => {
-      const result = await postService.create(db, post, userId);
+      const result = await postService.create(db, post, req.session.userId);
       if (result) {
         res.sendStatus(200);
       } else {
