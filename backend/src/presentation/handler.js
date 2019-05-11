@@ -79,14 +79,12 @@ app.post('/users/logout', async (req, res) => {
   res.send(200);
 });
 
-app.post('/users/me', async (req, res) => {
+app.get('/users/me', async (req, res) => {
   // If session has userId stored it means that user is logged in
   // (session hasn't been destroy by user logging out or session being expired)
-  const { userId } = req.session.userId;
-
-  if (userId) {
+  if (req.session.userId) {
     await withDb(async (db) => {
-      const user = await userService.getUserData(db, userId);
+      const user = await userService.getUserData(db, req.session.userId);
       if (user) {
         res.json(user).status(200);
       } else {
@@ -114,7 +112,6 @@ if (process.env.E2E_API_ENABLED) {
 
 app.post('/posts', async (req, res) => {
   const { post, userId } = req.body;
-
   if (req.session.userId) {
     await withDb(async (db) => {
       const result = await postService.create(db, post, userId);
