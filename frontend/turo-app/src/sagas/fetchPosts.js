@@ -2,7 +2,7 @@ import { put, takeLatest } from 'redux-saga/effects';
 
 function* fetchPosts() {
   try {
-    const response = yield fetch('http://localhost:4000/posts/all',
+    const response = yield fetch('http://localhost:4000/posts',
       {
         method: 'GET',
         headers: {

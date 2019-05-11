@@ -79,13 +79,13 @@ functions:
     handler: src/presentation/handler.handler
     events:
       - http:
-          path: posts/create
+          path: posts
           method: post
   fetchAll:
     handler: src/presentation/handler.handler
     events:
       - http:
-          path: posts/all
+          path: posts
           method: get
   e2eDeleteAll:
     handler: src/presentation/handler.handler

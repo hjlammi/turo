@@ -3,7 +3,7 @@ import fetchPosts from '../actions/fetchPosts';
 
 function* createPost({ post, userId }) {
   try {
-    const response = yield fetch('http://localhost:4000/posts/create',
+    const response = yield fetch('http://localhost:4000/posts',
       {
         method: 'POST',
         headers: {

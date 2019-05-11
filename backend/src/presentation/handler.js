@@ -93,7 +93,7 @@ if (process.env.E2E_API_ENABLED) {
   });
 }
 
-app.post('/posts/create', async (req, res) => {
+app.post('/posts', async (req, res) => {
   const { post, userId } = req.body;
 
   if (req.session.userId) {
@@ -110,7 +110,7 @@ app.post('/posts/create', async (req, res) => {
   }
 });
 
-app.get('/posts/all', async (req, res) => {
+app.get('/posts', async (req, res) => {
   if (req.session.userId) {
     await withDb(async (db) => {
       const result = await postService.fetchAll(db);
