@@ -8,6 +8,7 @@ function* signUp({ username, email, password }) {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({
           username,
           email,

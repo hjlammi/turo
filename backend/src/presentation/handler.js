@@ -66,7 +66,7 @@ app.post('/users/login', async (req, res) => {
   await withDb(async (db) => {
     const user = await userService.login(db, email, password);
     if (user) {
-      sess.email = email;
+      req.session.userId = user.id;
       res.json(user).status(200);
     } else {
       res.sendStatus(400);
@@ -96,7 +96,7 @@ if (process.env.E2E_API_ENABLED) {
 app.post('/posts/create', async (req, res) => {
   const { post, userId } = req.body;
 
-  if (sess.email) {
+  if (req.session.userId) {
     await withDb(async (db) => {
       const result = await postService.create(db, post, userId);
       if (result) {
@@ -111,7 +111,7 @@ app.post('/posts/create', async (req, res) => {
 });
 
 app.get('/posts/all', async (req, res) => {
-  if (sess.email) {
+  if (req.session.userId) {
     await withDb(async (db) => {
       const result = await postService.fetchAll(db);
       if (result) {

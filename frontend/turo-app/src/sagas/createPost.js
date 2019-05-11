@@ -9,6 +9,7 @@ function* createPost({ post, userId }) {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({
           post,
           userId,
