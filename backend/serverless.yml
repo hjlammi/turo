@@ -57,45 +57,25 @@ provider:
 functions:
   app:
     handler: src/presentation/handler.handler
-  createUser:
-    handler: src/presentation/handler.handler
     events:
       - http:
           path: users/register
           method: post
-  login:
-    handler: src/presentation/handler.handler
-    events:
       - http:
           path: users/login
           method: post
-  logout:
-    handler: src/presentation/handler.handler
-    events:
       - http:
           path: users/logout
           method: post
-  me:
-    handler: src/presentation/handler.handler
-    events:
       - http:
           path: users/me
           method: get
-  createPost:
-    handler: src/presentation/handler.handler
-    events:
       - http:
           path: posts
           method: post
-  fetchAll:
-    handler: src/presentation/handler.handler
-    events:
       - http:
           path: posts
           method: get
-  e2eDeleteAll:
-    handler: src/presentation/handler.handler
-    events:
       - http:
           path: e2e/users
           method: delete
