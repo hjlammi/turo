@@ -4,6 +4,7 @@ import logOutSagas from './logOut';
 import signupSagas from './signup';
 import createPostSagas from './createPost';
 import fetchPostsSagas from './fetchPosts';
+import loadUserDataSagas from './loadUserData';
 
 export default function* rootSaga() {
   yield all([
@@ -12,5 +13,6 @@ export default function* rootSaga() {
     ...signupSagas,
     ...createPostSagas,
     ...fetchPostsSagas,
+    ...loadUserDataSagas,
   ]);
 }

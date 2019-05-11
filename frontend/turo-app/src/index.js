@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { logger } from 'redux-logger';
 import reducer from './reducers/index';
 import * as serviceWorker from './serviceWorker';
-import App from './App';
+import App from './containers/AppContainer';
 import rootSaga from './sagas/index';
 
 // // create the saga middleware
