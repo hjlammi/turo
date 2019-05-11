@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import '../css/container.css';
 
 export default class Confirmation extends React.Component {
@@ -10,6 +11,11 @@ export default class Confirmation extends React.Component {
   }
 
   render() {
+    const { isLoggedIn } = this.props;
+    if (isLoggedIn) {
+      return <Redirect to={{ pathname: '/' }} />;
+    }
+
     return (
       <div className="confirmation container">
         <p>Thanks for signing up!</p>
@@ -18,3 +24,7 @@ export default class Confirmation extends React.Component {
     );
   }
 }
+
+Confirmation.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired,
+};
