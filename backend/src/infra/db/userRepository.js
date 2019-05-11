@@ -9,7 +9,7 @@ exports.findByEmail = async (db, email) => {
 
 exports.findByUsername = async (db, username) => {
   const result = await db.query(
-    'SELECT * FROM "user" WHERE username = $1',
+    'SELECT username, email, id FROM "user" WHERE username = $1',
     [username],
   );
 
@@ -27,7 +27,7 @@ exports.add = async (db, username, email, hashedPassword) => {
 
 exports.getUserData = async (db, userId) => {
   const result = await db.query(
-    'SELECT * FROM "user" WHERE id = $1',
+    'SELECT username, email, id FROM "user" WHERE id = $1',
     [userId],
   );
 
