@@ -1,4 +1,5 @@
 import React from 'react';
+import './App.css';
 import {
   HashRouter as Router,
   Route,
@@ -10,6 +11,7 @@ import ConfirmationContainer from './containers/ConfirmationContainer';
 import ProfileContainer from './containers/ProfileContainer';
 import HeaderContainer from './containers/HeaderContainer';
 import HomeContainer from './containers/HomeContainer';
+import { ReactComponent as Spinner } from './index.blue-longcat-spinner.svg';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -43,7 +45,7 @@ export default class App extends React.Component {
       );
     }
 
-    return null;
+    return <Spinner className="spinner" />;
   }
 }
 
