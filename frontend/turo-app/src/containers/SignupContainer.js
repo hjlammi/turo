@@ -4,6 +4,7 @@ import SignUp from '../components/SignUp';
 
 const mapStateToProps = state => ({
   signUpStatus: state.signUp.status,
+  isLoggedIn: state.global.user != null,
 });
 
 const mapDispatchToProps = dispatch => ({

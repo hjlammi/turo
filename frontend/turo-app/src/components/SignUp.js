@@ -39,15 +39,21 @@ export default class SignUp extends React.Component {
   }
 
   render() {
-    const { password1, passwordLength } = this.state;
+    const {
+      email, username, password2, password1, passwordLength,
+    } = this.state;
     const buttonDisabled = password1 === '' || this.mismatchingPasswords() || passwordLength < 10;
-    const { signUpStatus } = this.props;
+    const { signUpStatus, onSignUp, isLoggedIn } = this.props;
 
     // TODO: Show error message when too short password
     // TODO: Sanitizing for email and password
 
     if (signUpStatus === 'ACCOUNT_CREATED') {
       return <Redirect to={{ pathname: '/confirm' }} />;
+    }
+
+    if (isLoggedIn) {
+      return <Redirect to={{ pathname: '/' }} />;
     }
 
     let errorMsg = <div className="error" />;
@@ -86,4 +92,5 @@ export default class SignUp extends React.Component {
 SignUp.propTypes = {
   onSignUp: PropTypes.func.isRequired,
   signUpStatus: PropTypes.string.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
 };
