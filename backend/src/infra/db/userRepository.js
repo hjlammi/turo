@@ -25,6 +25,15 @@ exports.add = async (db, username, email, hashedPassword) => {
   return result.rows[0];
 };
 
+exports.getUserData = async (db, userId) => {
+  const result = await db.query(
+    'SELECT * FROM "user" WHERE id = $1',
+    [userId],
+  );
+
+  return result.rows[0];
+};
+
 exports.deleteAll = async (db) => {
   await db.query(
     'DELETE FROM "user"',

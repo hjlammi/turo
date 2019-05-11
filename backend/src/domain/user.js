@@ -49,3 +49,18 @@ exports.authenticate = async (db, email, password) => {
 
   return null;
 };
+
+exports.getUserData = async (db, userId) => {
+  const user = await userRepository.getUserData(db, userId);
+  let userData = null;
+
+  if (user) {
+    userData = {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+    };
+  }
+
+  return userData;
+};

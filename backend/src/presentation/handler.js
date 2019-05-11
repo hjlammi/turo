@@ -79,6 +79,25 @@ app.post('/users/logout', async (req, res) => {
   res.send(200);
 });
 
+app.post('/users/me', async (req, res) => {
+  // If session has userId stored it means that user is logged in
+  // (session hasn't been destroy by user logging out or session being expired)
+  const { userId } = req.session.userId;
+
+  if (userId) {
+    await withDb(async (db) => {
+      const user = await userService.getUserData(db, userId);
+      if (user) {
+        res.json(user).status(200);
+      } else {
+        res.sendStatus(404);
+      }
+    });
+  } else {
+    res.sendStatus(403);
+  }
+});
+
 // Used only in dev env for emptying db for tests.
 // Must be disabled for production!
 if (process.env.E2E_API_ENABLED) {

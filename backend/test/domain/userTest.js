@@ -51,3 +51,20 @@ describe('User creation', function () {
     expect(result).to.deep.equal({ success: 'ACCOUNT_CREATED' });
   });
 });
+
+describe('Getting user data', function () {
+  withDb();
+
+  it('fails with non-existing userId', async function () {
+    const result = await user.getUserData(db(), 0);
+    expect(result).to.equal(null);
+  });
+
+  it('succeeds with an existing userId', async function () {
+    await user.create(db(), 'mary', 'mary@example.com', 'secret_password');
+    const createdUser = await user.authenticate(db(), 'mary@example.com', 'secret_password');
+    const result = await user.getUserData(db(), createdUser.id);
+    const userData = { id: createdUser.id, username: 'mary', email: 'mary@example.com' };
+    expect(result).to.deep.equal(userData);
+  });
+});
