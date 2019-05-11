@@ -13,6 +13,17 @@ const user = (state = null, action) => {
   }
 };
 
+const isUserLoaded = (state = false, action) => {
+  switch (action.type) {
+    case 'GET_USERDATA_SUCCESS':
+    case 'GET_USERDATA_FAILURE':
+      return true;
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   user,
+  isUserLoaded,
 });

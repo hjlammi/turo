@@ -24,23 +24,30 @@ export default class App extends React.Component {
   }
 
   render() {
-    return (
-      <Router>
-        <div className="App">
-          <Route path="/" component={HeaderContainer} />
-          <div>
-            <Route exact path="/" component={HomeContainer} />
-            <Route path="/login" component={LoginContainer} />
-            <Route path="/signup" component={SignupContainer} />
-            <Route path="/confirm" component={ConfirmationContainer} />
-            <Route path="/profile" component={ProfileContainer} />
+    const { isInitialized } = this.props;
+
+    if (isInitialized) {
+      return (
+        <Router>
+          <div className="App">
+            <Route path="/" component={HeaderContainer} />
+            <div>
+              <Route exact path="/" component={HomeContainer} />
+              <Route path="/login" component={LoginContainer} />
+              <Route path="/signup" component={SignupContainer} />
+              <Route path="/confirm" component={ConfirmationContainer} />
+              <Route path="/profile" component={ProfileContainer} />
+            </div>
           </div>
-        </div>
-      </Router>
-    );
+        </Router>
+      );
+    }
+
+    return null;
   }
 }
 
 App.propTypes = {
   onLoad: PropTypes.func.isRequired,
+  isInitialized: PropTypes.bool.isRequired,
 };
