@@ -9,11 +9,11 @@ const userService = require('../application/userService');
 const postService = require('../application/postService');
 
 const dbPool = new pg.Pool({
-  host: 'localhost',
-  port: 5432,
-  database: 'turo_db',
-  user: 'turo',
-  password: 'turo123',
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  database: process.env.DB_DATABASE,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
 });
 
 const app = express();
