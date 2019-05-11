@@ -31,14 +31,13 @@ context('SignUp', () => {
 
     // Alice tries to sign up by providing her email address and the same password twice
     // but her password is less than 10 characters long i.e. too short so the sign up button remains disabled.
-    it('should have a disabled button when the password is too short', () => {
+    it('should have a disabled button and error message when the password is too short', () => {
       cy.get('#username').type('alice');
       cy.get('#email').type('alice@example.com');
       cy.get('#password1').type('short');
-      cy.get('#password2').type('short');
-      cy.get('.form')
-      .find('button')
-      .should('be.disabled');
+      cy.get('#password1').blur();
+      cy.get('.error').should('have.text', 'Password should be at least 10 characters long.');
+      cy.get('.form').find('button').should('be.disabled');
     });
 
     // Alice tries to sign up by providing her email address and the same password twice

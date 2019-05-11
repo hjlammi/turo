@@ -10,22 +10,24 @@ const Field = (props) => {
     onChange: PropTypes.func,
     type: PropTypes.string,
     value: PropTypes.string.isRequired,
+    onBlur: PropTypes.func,
+  };
+
+  Field.defaultProps = {
+    onChange: () => {},
+    onBlur: () => {},
+    type: 'text',
   };
 
   const {
-    fieldLabel, id, onChange, type, value,
+    fieldLabel, id, onChange, type, value, onBlur,
   } = props;
-
-  Field.defaultProps = {
-    onChange,
-    type: 'text',
-  };
 
   return (
     <div className="field">
       <label type="label" htmlFor={id} className="label">
         <div>{fieldLabel}</div>
-        <input type={type} className="input" id={id} value={value} onChange={onChange} />
+        <input type={type} className="input" id={id} value={value} onBlur={onBlur} onChange={onChange} />
       </label>
     </div>
   );
