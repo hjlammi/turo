@@ -19,7 +19,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "pre-commit": "npx eslint . && npx cypress run"
   },
   "eslintConfig": {
     "extends": "react-app"

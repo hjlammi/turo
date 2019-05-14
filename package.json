@@ -1,12 +1,14 @@
 {
   "name": "turo",
   "version": "1.0.0",
-  "scripts": {
-    "precommit": "cd backend && npm run pre-commit && cd - && cd frontend/turo-app && npm run pre-commit"
-  },
   "author": "Heidi Lammi-Mihaljov",
   "license": "MIT",
   "devDependencies": {
     "husky": "^2.3.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "cd backend && npm run pre-commit && cd - && cd frontend/turo-app && npm run pre-commit"
+    }
   }
 }
