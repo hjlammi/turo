@@ -1,5 +1,5 @@
 {
   "hooks": {
-    "pre-commit": "./node_modules/eslint/bin/eslint.js ."
+    "pre-commit": "./node_modules/eslint/bin/eslint.js . && npm test"
   }
 }
