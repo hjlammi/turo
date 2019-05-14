@@ -8,7 +8,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "cd backend && npm run pre-commit && cd - && cd frontend/turo-app && npm run pre-commit"
+      "pre-commit": "cd backend && npm run pre-commit && cd - && cd frontend/turo-app && npm run pre-commit",
+      "pre-push": "cd frontend/turo-app && npm run pre-push"
     }
   }
 }

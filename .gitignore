@@ -1,6 +1,7 @@
 .terraform
 terraform.tfstate.backup
 notes.txt
+frontend/turo-app/cypress/videos/
 
 # package directories
 node_modules
