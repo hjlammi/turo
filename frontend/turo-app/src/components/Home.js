@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import Field from './Field';
 import CustomButton from './CustomButton';
 import Post from './Post';
 import '../css/container.css';
@@ -37,10 +36,16 @@ export default class Home extends React.Component {
     } = this.props;
     const { post } = this.state;
     const { posts } = this.props;
-    const buttonDisabled = post === '';
+    const buttonDisabled = post === '' || post.length > 500;
 
     if (!isLoggedIn) {
       return <Redirect to={{ pathname: '/login' }} />;
+    }
+
+    // Error message if the post is too long.
+    let errorMsg = <div className="error" />;
+    if (post.length > 500) {
+      errorMsg = <div className="error">The maximum length of a post is 500 characters.</div>;
     }
 
     let postItems = <p />;
@@ -55,8 +60,12 @@ export default class Home extends React.Component {
     return (
       <div className="container">
         <div className="home">
+          {errorMsg}
           <div className="form">
-            <Field fieldLabel="Write something" id="post" type="text" value={post} onChange={(e) => { this.handlePost(e); }} />
+            <label type="label" htmlFor="post" className="label">
+              Write something
+              <textarea id="post" type="text" value={post} onChange={(e) => { this.handlePost(e); }} />
+            </label>
             <CustomButton
               buttonText="Post"
               id="postButton"

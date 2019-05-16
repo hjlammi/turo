@@ -30,6 +30,11 @@ context('Home', () => {
       cy.get('button').click();
       cy.get('li:first-child .content').should('have.text', 'This is my second post!');
     })
+
+    it('should show an error message if the user writes a post that is over 500 chars long', () => {
+      cy.get('#post').type("Your bones don't break, mine do. That's clear. Your cells react to bacteria and viruses differently than mine. You don't get sick, I do. That's also clear. But for some reason, you and I react the exact same way to water. We swallow it too fast, we choke. We get some in our lungs, we drown. However unreal it may seem, we are connected, you and I. We're on the same curve, just on opposite ends. Your bones don't break, mine do. That's clear. Your cells react to bacteria and viruses differently than mine. You don't get sick, I do. That's also clear. But for some reason, you and I react the exact same way to water. We swallow it too fast, we choke. We get some in our lungs, we drown. However unreal it may seem, we are connected, you and I. We're on the same curve, just on opposite ends.");
+      cy.get('.error').should('have.text', 'The maximum length of a post is 500 characters.');
+    })
   });
 
   // When Alice wants to log out from the application she clicks the "Log out" link

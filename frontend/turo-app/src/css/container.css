@@ -18,10 +18,10 @@
   grid-column: 1 / 5;
 }
 
-.form > button {
+/* .form > button {
   line-height: 2;
   grid-column: 4 / 5;
-}
+} */
 
 .form > .link {
   grid-column: 4 / 5;
@@ -44,4 +44,19 @@ li {
   background-color: white;
   padding: 20px;
   margin-bottom: 10px;
+}
+
+.home > .form > .label {
+  display: block;
+  grid-column: 1 / 5;
+}
+
+.label > textarea {
+  display: block;
+  width: 100%;
+  min-height: 50px;
+}
+
+.home > .form > button {
+  line-height: 2;
 }
