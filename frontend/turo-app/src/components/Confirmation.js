@@ -11,8 +11,12 @@ export default class Confirmation extends React.Component {
   }
 
   render() {
-    const { isLoggedIn } = this.props;
+    const { isLoggedIn, signUpStatus } = this.props;
     if (isLoggedIn) {
+      return <Redirect to={{ pathname: '/' }} />;
+    }
+
+    if (signUpStatus === '') {
       return <Redirect to={{ pathname: '/' }} />;
     }
 
@@ -27,4 +31,5 @@ export default class Confirmation extends React.Component {
 
 Confirmation.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
+  signUpStatus: PropTypes.string.isRequired,
 };

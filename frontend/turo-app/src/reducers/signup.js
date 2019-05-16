@@ -6,6 +6,8 @@ const status = (state = '', action) => {
       return action.message.success;
     case 'SIGN_UP_FAILURE':
       return action.message.error;
+    case 'LOGIN_PAGE_LOADED':
+      return '';
     default:
       return state;
   }

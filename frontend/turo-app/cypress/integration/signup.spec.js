@@ -82,22 +82,13 @@ context('SignUp', () => {
       cy.get('#password1').type('alices_password');
       cy.get('#password2').type('alices_password');
       cy.get('.form').find('button').should('not.be.disabled').click();
-      // Alice is then redirected to the confirmation page.
+      // Alice is then redirected to the confirmation page from which
+      // she can travel to login page by clicking Login link.
       cy.location('hash').should('eq', '#/confirm');
-    });
-  })
-
-  // From the confirmation page Alice can travel to login page by clicking Login link.
-  describe('confirmation page', () => {
-    beforeEach(() => {
-      cy.visit('http://localhost:3000/#/confirm');
-    });
-
-    it('should have a link to the login page', () => {
       cy.get('.confirmation > .link')
-        .should('have.text', 'Login')
-        .click();
+      .should('have.text', 'Login')
+      .click();
       cy.location('hash').should('eq', '#/login');
     });
-  });
+  })
 })
