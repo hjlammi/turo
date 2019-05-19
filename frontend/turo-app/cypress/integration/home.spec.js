@@ -1,11 +1,25 @@
 context('Home', () => {
   before(() => {
-    cy.request('DELETE', 'http://localhost:4000/e2e/users');
-    cy.request('POST', 'http://localhost:4000/users/register', { username: 'alice', email: 'alice@example.com', password: 'alices_password' });
-    cy.visit('http://localhost:3000/#/login');
-    cy.get('#email').type('alice@example.com');
-    cy.get('#password').type('alices_password');
-    cy.get('#loginButton').click();
+    cy.request('GET', 'http://localhost:4000/csrf-token')
+      .then((response) => {
+        cy.request('DELETE', 'http://localhost:4000/e2e/users');
+        cy.request({
+          method: 'POST',
+          url: 'http://localhost:4000/users/register',
+          headers: {
+            'csrf-token': response.body
+          },
+          body: {
+            username: 'alice',
+            email: 'alice@example.com',
+            password: 'alices_password'
+          }
+      });
+      cy.visit('http://localhost:3000/#/login');
+      cy.get('#email').type('alice@example.com');
+      cy.get('#password').type('alices_password');
+      cy.get('#loginButton').click();
+    });
   });
 
   beforeEach(() => {

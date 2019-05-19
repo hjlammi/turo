@@ -1,12 +1,15 @@
-import { put, takeLatest } from 'redux-saga/effects';
+import { put, takeLatest, select } from 'redux-saga/effects';
+import getCsrfToken from '../selectors/getCsrfToken';
 
 function* logOut() {
+  const token = yield select(getCsrfToken);
   try {
     const response = yield fetch('http://localhost:4000/users/logout',
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'csrf-token': token,
         },
         credentials: 'include',
       });

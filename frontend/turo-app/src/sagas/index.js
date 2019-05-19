@@ -5,6 +5,7 @@ import signupSagas from './signup';
 import createPostSagas from './createPost';
 import fetchPostsSagas from './fetchPosts';
 import loadUserDataSagas from './loadUserData';
+import fetchCsrfToken from './fetchCsrfToken';
 import init from './init';
 
 export default function* rootSaga() {
@@ -15,6 +16,7 @@ export default function* rootSaga() {
     ...createPostSagas,
     ...fetchPostsSagas,
     ...loadUserDataSagas,
+    ...fetchCsrfToken,
     ...init,
   ]);
 }

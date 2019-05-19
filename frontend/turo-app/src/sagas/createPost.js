@@ -1,13 +1,16 @@
-import { put, takeLatest } from 'redux-saga/effects';
+import { put, takeLatest, select } from 'redux-saga/effects';
 import fetchPosts from '../actions/fetchPosts';
+import getCsrfToken from '../selectors/getCsrfToken';
 
 function* createPost({ post, userId }) {
+  const token = yield select(getCsrfToken);
   try {
     const response = yield fetch('http://localhost:4000/posts',
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'csrf-token': token,
         },
         credentials: 'include',
         body: JSON.stringify({

@@ -4,6 +4,7 @@ const pg = require('pg');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const PGSession = require('connect-pg-simple')(session);
+const csrf = require('csurf');
 
 const userService = require('../application/userService');
 const postService = require('../application/postService');
@@ -27,12 +28,6 @@ const sess = {
   saveUninitialized: true,
 };
 
-if (app.get('env') === 'production') {
-  sess.cookie.secure = true;
-}
-
-app.use(session(sess));
-
 const withDb = async (f) => {
   const db = await dbPool.connect();
 
@@ -42,6 +37,48 @@ const withDb = async (f) => {
     await db.release();
   }
 };
+
+if (app.get('env') === 'production') {
+  sess.cookie.secure = true;
+}
+
+app.use(session(sess));
+
+const e2eRouter = () => {
+  const e2e = new express.Router();
+
+  /* eslint-disable global-require */
+  const e2eUserService = require('../application/e2e/userService');
+  /* eslint-enable global-require */
+  e2e.delete('/users', async (req, res) => {
+    await withDb(async (db) => {
+      await e2eUserService.deleteAll(db);
+      res.sendStatus(200);
+    });
+  });
+
+  return e2e;
+};
+
+// Used only in dev env for emptying db for tests.
+// Must be disabled for production!
+if (process.env.E2E_API_ENABLED) {
+  app.use('/e2e', e2eRouter());
+}
+
+app.use(csrf());
+app.use((err, req, res, next) => {
+  if (err.code === 'EBADCSRFTOKEN') {
+    res.sendStatus(403);
+  } else {
+    next(err);
+  }
+});
+
+app.get('/csrf-token', async (req, res) => {
+  const csrfToken = req.csrfToken();
+  res.status(200).send(csrfToken);
+});
 
 app.post('/users/register', async (req, res) => {
   const { username, email, password } = req.body;
@@ -95,20 +132,6 @@ app.get('/users/me', async (req, res) => {
     res.sendStatus(403);
   }
 });
-
-// Used only in dev env for emptying db for tests.
-// Must be disabled for production!
-if (process.env.E2E_API_ENABLED) {
-  /* eslint-disable global-require */
-  const e2eUserService = require('../application/e2e/userService');
-  /* eslint-enable global-require */
-  app.delete('/e2e/users', async (req, res) => {
-    await withDb(async (db) => {
-      await e2eUserService.deleteAll(db);
-      res.sendStatus(200);
-    });
-  });
-}
 
 app.post('/posts', async (req, res) => {
   const { post } = req.body;

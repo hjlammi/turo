@@ -13,6 +13,17 @@ const user = (state = null, action) => {
   }
 };
 
+const csrfToken = (state = null, action) => {
+  switch (action.type) {
+    case 'FETCH_CSRF_TOKEN_SUCCESS':
+      return action.csrf_token;
+    case 'FETCH_CSRF_TOKEN_FAILURE':
+      return null;
+    default:
+      return state;
+  }
+};
+
 const isUserLoaded = (state = false, action) => {
   switch (action.type) {
     case 'GET_USERDATA_SUCCESS':
@@ -25,5 +36,6 @@ const isUserLoaded = (state = false, action) => {
 
 export default combineReducers({
   user,
+  csrfToken,
   isUserLoaded,
 });

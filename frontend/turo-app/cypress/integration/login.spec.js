@@ -1,7 +1,21 @@
 context('Login', () => {
   before(() => {
-    cy.request('DELETE', 'http://localhost:4000/e2e/users');
-    cy.request('POST', 'http://localhost:4000/users/register', { username: 'alice', email: 'alice@example.com', password: 'alices_password' });
+    cy.request('GET', 'http://localhost:4000/csrf-token')
+      .then((response) => {
+        cy.request('DELETE', 'http://localhost:4000/e2e/users');
+        cy.request({
+          method: 'POST',
+          url: 'http://localhost:4000/users/register',
+          headers: {
+            'csrf-token': response.body
+          },
+          body: {
+            username: 'alice',
+            email: 'alice@example.com',
+            password: 'alices_password'
+          }
+      });
+    });
   });
 
   beforeEach(() => {

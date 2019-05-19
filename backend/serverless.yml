@@ -68,6 +68,9 @@ functions:
           path: users/logout
           method: post
       - http:
+          path: csrf-token
+          method: get
+      - http:
           path: users/me
           method: get
       - http:

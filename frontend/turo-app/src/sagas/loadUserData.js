@@ -1,12 +1,15 @@
-import { put, takeLatest } from 'redux-saga/effects';
+import { put, takeLatest, select } from 'redux-saga/effects';
+import getCsrfToken from '../selectors/getCsrfToken';
 
 function* loadUserData() {
+  const token = yield select(getCsrfToken);
   try {
     const response = yield fetch('http://localhost:4000/users/me',
       {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'csrf-token': token,
         },
         credentials: 'include',
       });
