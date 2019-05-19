@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import loadUserData from '../actions/loadUserData';
+import init from '../actions/init';
 import App from '../App';
 
 const mapStateToProps = state => ({
@@ -8,7 +8,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onLoad: () => dispatch(loadUserData()),
+  onLoad: () => dispatch(init()),
 });
 
 export default connect(
