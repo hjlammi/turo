@@ -83,18 +83,24 @@ app.get('/csrf-token', async (req, res) => {
 app.post('/users/register', async (req, res) => {
   const { username, email, password } = req.body;
 
-  await withDb(async (db) => {
-    const result = await userService.register(db, username, email, password);
-    if (result.success) {
-      res.status(200).json({ success: result.success });
-    } else if (result.error === 'USERNAME_TAKEN') {
-      res.status(409).json({ error: result.error });
-    } else if (result.error === 'EMAIL_TAKEN') {
-      res.status(409).json({ error: result.error });
-    } else {
-      res.sendStatus(500);
-    }
-  });
+  const validEmail = email.match(/.@./g);
+
+  if (!validEmail) {
+    res.status(400).json({ error: 'INVALID_EMAIL' });
+  } else {
+    await withDb(async (db) => {
+      const result = await userService.register(db, username, email, password);
+      if (result.success) {
+        res.status(200).json({ success: result.success });
+      } else if (result.error === 'USERNAME_TAKEN') {
+        res.status(409).json({ error: result.error });
+      } else if (result.error === 'EMAIL_TAKEN') {
+        res.status(409).json({ error: result.error });
+      } else {
+        res.sendStatus(500);
+      }
+    });
+  }
 });
 
 app.post('/users/login', async (req, res) => {

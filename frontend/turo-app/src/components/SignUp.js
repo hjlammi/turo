@@ -77,7 +77,7 @@ export default class SignUp extends React.Component {
       errorMsg = <div className="error">Password should be at least 10 characters long.</div>;
     } else if (this.mismatchingPasswords() && touched.password1 && touched.password2) {
       errorMsg = <div className="error">Passwords don&apos;t match.</div>;
-    } else if (!this.validEmail(email) && touched.email) {
+    } else if ((!this.validEmail(email) && touched.email) || signUpStatus === 'INVALID_EMAIL') {
       errorMsg = <div className="error">Invalid email address.</div>;
     }
 
