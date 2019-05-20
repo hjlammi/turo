@@ -22,6 +22,8 @@ function* createPost({ post, userId }) {
     if (response.status === 200) {
       yield put({ type: 'CREATE_POST_SUCCESS' });
       yield put(fetchPosts());
+    } else if (response.status === 413) {
+      yield put({ type: 'TOO_LONG_POST' });
     } else {
       yield put({ type: 'CREATE_POST_FAILURE' });
     }

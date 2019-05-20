@@ -32,7 +32,7 @@ export default class Home extends React.Component {
 
   render() {
     const {
-      isLoggedIn, user, onSubmitPost,
+      isLoggedIn, user, onSubmitPost, postError,
     } = this.props;
     const { post } = this.state;
     const { posts } = this.props;
@@ -44,7 +44,7 @@ export default class Home extends React.Component {
 
     // Error message if the post is too long.
     let errorMsg = <div className="error" />;
-    if (post.length > 500) {
+    if (post.length > 500 || postError) {
       errorMsg = <div className="error">The maximum length of a post is 500 characters.</div>;
     }
 
@@ -103,6 +103,7 @@ Home.propTypes = {
       username: PropTypes.string.isRequired,
     }),
   ),
+  postError: PropTypes.bool.isRequired,
 };
 
 Home.defaultProps = {

@@ -79,7 +79,7 @@ context('SignUp', () => {
     });
 
     // She also tries to sign up with an already registered email address and is shown an error message.
-    it('should tell that the chosen username is already taken', () => {
+    it('should tell that the email is already registered', () => {
       cy.get('#username').type('ali');
       cy.get('#email').type('alice_other@example.com');
       cy.get('#password1').type('alices_password');

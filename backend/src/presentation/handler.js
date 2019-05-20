@@ -135,17 +135,21 @@ app.get('/users/me', async (req, res) => {
 
 app.post('/posts', async (req, res) => {
   const { post } = req.body;
-  if (req.session.userId) {
-    await withDb(async (db) => {
-      const result = await postService.create(db, post, req.session.userId);
-      if (result) {
-        res.sendStatus(200);
-      } else {
-        res.sendStatus(500);
-      }
-    });
+  if (post.length <= 500) {
+    if (req.session.userId) {
+      await withDb(async (db) => {
+        const result = await postService.create(db, post, req.session.userId);
+        if (result) {
+          res.sendStatus(200);
+        } else {
+          res.sendStatus(500);
+        }
+      });
+    } else {
+      res.sendStatus(403);
+    }
   } else {
-    res.sendStatus(403);
+    res.status(413).send('TOO_LONG_POST');
   }
 });
 

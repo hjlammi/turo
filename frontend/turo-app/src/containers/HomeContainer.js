@@ -7,6 +7,7 @@ const mapStateToProps = state => ({
   isLoggedIn: state.global.user != null,
   user: state.global.user,
   posts: state.home.posts,
+  postError: state.home.postError,
 });
 
 const mapDispatchToProps = dispatch => ({

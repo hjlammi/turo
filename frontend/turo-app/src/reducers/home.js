@@ -11,6 +11,16 @@ const posts = (state = null, action) => {
   }
 };
 
+const postError = (state = false, action) => {
+  switch (action.type) {
+    case 'TOO_LONG_POST':
+      return true;
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   posts,
+  postError,
 });
