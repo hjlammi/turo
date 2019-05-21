@@ -77,7 +77,7 @@ export default class SignUp extends React.Component {
       errorMsg = <div className="error">The username is already taken! Choose another username!</div>;
     } else if (signUpStatus === 'EMAIL_TAKEN') {
       errorMsg = <div className="error">The email is already registered!</div>;
-    } else if (passwordLength < 10 && touched.password1) {
+    } else if ((passwordLength < 10 && touched.password1) || signUpStatus === 'TOO_SHORT_PASSWORD') {
       errorMsg = <div className="error">Password should be at least 10 characters long.</div>;
     } else if (this.mismatchingPasswords() && touched.password1 && touched.password2) {
       errorMsg = <div className="error">Passwords don&apos;t match.</div>;

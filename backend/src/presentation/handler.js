@@ -89,6 +89,8 @@ app.post('/users/register', async (req, res) => {
     res.status(400).json({ error: 'INVALID_EMAIL' });
   } else if (!username.match(/^\w+$/)) {
     res.status(400).json({ error: 'INVALID_USERNAME' });
+  } else if (password.length < 10) {
+    res.status(400).json({ error: 'TOO_SHORT_PASSWORD' });
   } else {
     await withDb(async (db) => {
       const result = await userService.register(db, username, email, password);
