@@ -87,6 +87,8 @@ app.post('/users/register', async (req, res) => {
 
   if (!validEmail) {
     res.status(400).json({ error: 'INVALID_EMAIL' });
+  } else if (!username.match(/^\w+$/)) {
+    res.status(400).json({ error: 'INVALID_USERNAME' });
   } else {
     await withDb(async (db) => {
       const result = await userService.register(db, username, email, password);

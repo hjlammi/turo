@@ -52,12 +52,16 @@ export default class SignUp extends React.Component {
 
   validEmail = email => email.match(/.@./g);
 
+  validUsername = username => username.match(/\w+/g);
+
   render() {
     const {
       email, username, password2, password1, passwordLength, touched,
     } = this.state;
     const buttonDisabled = password1 === '' || this.mismatchingPasswords() || passwordLength < 10 || !this.validEmail(email);
-    const { signUpStatus, onSignUp, isLoggedIn } = this.props;
+    const {
+      signUpStatus, onSignUp, isLoggedIn,
+    } = this.props;
 
     if (signUpStatus === 'ACCOUNT_CREATED') {
       return <Redirect to={{ pathname: '/confirm' }} />;
@@ -79,6 +83,8 @@ export default class SignUp extends React.Component {
       errorMsg = <div className="error">Passwords don&apos;t match.</div>;
     } else if ((!this.validEmail(email) && touched.email) || signUpStatus === 'INVALID_EMAIL') {
       errorMsg = <div className="error">Invalid email address.</div>;
+    } else if (!this.validUsername(username) || signUpStatus === 'INVALID_USERNAME') {
+      errorMsg = <div className="error">The only valid characters in the username are a-z, A-Z, numbers, and _!</div>;
     }
 
     return (

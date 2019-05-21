@@ -43,58 +43,44 @@ context('SignUp', () => {
       cy.visit('http://localhost:3000/#/signup');
     });
 
-    // Alice tries to sign up by providing her email address and the same password twice
-    // but her password is less than 10 characters long i.e. too short so the sign up button remains disabled.
-    it('should have a disabled button and error message when the password is too short', () => {
+    it.only('should sign up with a new customer', () => {
+      // Alice tries to sign up by providing her email address and the same password twice
+      // but her password is less than 10 characters long i.e. too short so the sign up button remains disabled.
       cy.get('#username').type('alice');
       cy.get('#email').type('alice@example.com');
       cy.get('#password1').type('short');
       cy.get('#password1').blur();
       cy.get('.error').should('have.text', 'Password should be at least 10 characters long.');
       cy.get('.form').find('button').should('be.disabled');
-    });
-
-    // Alice tries to sign up by providing her email address and the same password twice
-    // but she mistypes the second password and cannot click the sign up button which remains disabled.
-    it('should have a disabled button when second password is not the same as the first one', () => {
-      cy.get('#username').type('alice');
-      cy.get('#email').type('alice@example.com');
-      cy.get('#password1').type('alices_password');
+      // Alice tries to use a longer password
+      // but she mistypes the second password and cannot click the sign up button which remains disabled.
+      cy.get('#password1').clear().type('alices_password');
       cy.get('#password2').type('alices_passsword');
       cy.get('.form')
-        .find('button')
-        .should('be.disabled');
-    });
-
-    // Next Alice manages to type her password correctly twice so she will be able to push the sign up button.
-    // Unfortunately she has selected a username that is already taken so she has to choose another one.
-    it('should tell that the chosen username is already taken', () => {
-      cy.get('#username').type('alice');
-      cy.get('#email').type('alice@example.com');
-      cy.get('#password1').type('alices_password');
-      cy.get('#password2').type('alices_password');
+      .find('button')
+      .should('be.disabled');
+      // Next Alice manages to type her password correctly twice so she will be able to push the sign up button.
+      // Unfortunately she has selected a username that is already taken so she has to choose another one.
+      cy.get('#password1').clear().type('alices_password');
+      cy.get('#password2').clear().type('alices_password');
       cy.get('.form').find('button').should('not.be.disabled').click();
       cy.location('hash').should('eq', '#/signup');
       cy.get('.error').should('have.text', 'The username is already taken! Choose another username!');
-    });
-
-    // She also tries to sign up with an already registered email address and is shown an error message.
-    it('should tell that the email is already registered', () => {
-      cy.get('#username').type('ali');
-      cy.get('#email').type('alice_other@example.com');
-      cy.get('#password1').type('alices_password');
-      cy.get('#password2').type('alices_password');
+      // She tries once again to register but this time she has an invalid character in the username.
+      cy.get('#username').clear().type('ali% ');
+      cy.get('#password1').clear().type('alices_password');
+      cy.get('#password2').clear().type('alices_password');
+      cy.get('.form').find('button').should('not.be.disabled').click();
+      cy.location('hash').should('eq', '#/signup');
+      cy.get('.error').should('have.text', 'The only valid characters in the username are a-z, A-Z, numbers, and _!');
+      // She also tries to sign up with an already registered email address and is shown an error message.
+      cy.get('#username').clear().type('ali');
+      cy.get('#email').clear().type('alice_other@example.com');
       cy.get('.form').find('button').should('not.be.disabled').click();
       cy.location('hash').should('eq', '#/signup');
       cy.get('.error').should('have.text', 'The email is already registered!');
-    });
-
-    // Alice finally manages to sign up successfully with a long enough password typed the same way both times.
-    it('should sign up with a new customer and same password twice', () => {
-      cy.get('#username').type('ali');
-      cy.get('#email').type('alice@example.com');
-      cy.get('#password1').type('alices_password');
-      cy.get('#password2').type('alices_password');
+      // Alice finally manages to sign up successfully with a long enough password typed the same way both times.
+      cy.get('#email').clear().type('alice@example.com');
       cy.get('.form').find('button').should('not.be.disabled').click();
       // Alice is then redirected to the confirmation page from which
       // she can travel to login page by clicking Login link.
