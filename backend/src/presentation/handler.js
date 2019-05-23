@@ -11,6 +11,8 @@ const userService = require('../application/userService');
 const postService = require('../application/postService');
 
 let handler;
+let dbPool;
+let pgSession;
 const initHandler = async () => {
   let parameters;
   let host;
@@ -19,10 +21,6 @@ const initHandler = async () => {
   let dbUser;
   let dbPassword;
   let sessionSecret;
-
-  if (handler) {
-    return;
-  }
 
   const app = express();
   if (app.get('env') === 'production') {
@@ -54,7 +52,7 @@ const initHandler = async () => {
     sessionSecret = process.env.SESSION_SECRET;
   }
 
-  const dbPool = new pg.Pool({
+  dbPool = new pg.Pool({
     host,
     port,
     database,
@@ -64,8 +62,9 @@ const initHandler = async () => {
 
   app.use(bodyParser.json()); // for parsing application/json
 
+  pgSession = new PGSession({ pool: dbPool, pruneSessionInterval: false });
   const sess = {
-    store: new PGSession({ pool: dbPool }),
+    store: pgSession,
     secret: sessionSecret,
     cookie: { maxAge: 24 * 60 * 60 * 1000 }, // 24 hours
     resave: false,
@@ -225,7 +224,16 @@ const initHandler = async () => {
   handler = serverless(app);
 };
 
+function pruneSessions() {
+  return new Promise((resolve) => {
+    pgSession.pruneSessions(resolve);
+  });
+}
+
 module.exports.handler = async (event, context) => {
   await initHandler();
-  return handler(event, context);
+  await pruneSessions();
+  const result = await handler(event, context);
+  await dbPool.end();
+  return result;
 };
