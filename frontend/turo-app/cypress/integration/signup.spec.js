@@ -43,7 +43,7 @@ context('SignUp', () => {
       cy.visit('http://localhost:3000/#/signup');
     });
 
-    it.only('should sign up with a new customer', () => {
+    it('should sign up with a new customer', () => {
       // Alice tries to sign up by providing her email address and the same password twice
       // but her password is less than 10 characters long i.e. too short so the sign up button remains disabled.
       cy.get('#username').type('alice');
