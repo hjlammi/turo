@@ -2,7 +2,7 @@ import { put, takeLatest } from 'redux-saga/effects';
 
 function* fetchCsrfToken() {
   try {
-    const response = yield fetch('http://localhost:4000/csrf-token',
+    const response = yield fetch(`${process.env.REACT_APP_BACKEND_URL}/csrf-token`,
       {
         method: 'GET',
         headers: {

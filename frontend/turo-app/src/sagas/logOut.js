@@ -4,7 +4,7 @@ import getCsrfToken from '../selectors/getCsrfToken';
 function* logOut() {
   const token = yield select(getCsrfToken);
   try {
-    const response = yield fetch('http://localhost:4000/users/logout',
+    const response = yield fetch(`${process.env.REACT_APP_BACKEND_URL}/users/logout`,
       {
         method: 'POST',
         headers: {
