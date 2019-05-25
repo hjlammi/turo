@@ -13,8 +13,8 @@ const postService = require('../application/postService');
 let handler;
 let dbPool;
 let pgSession;
+
 const initHandler = async () => {
-  let parameters;
   let host;
   let port;
   let database;
@@ -23,6 +23,7 @@ const initHandler = async () => {
   let sessionSecret;
 
   const app = express();
+  const ssm = new AWS.SSM();
   if (app.get('env') === 'production') {
     const params = {
       Names: [
@@ -33,16 +34,15 @@ const initHandler = async () => {
         'turo_db_user',
         'turo_session_secret',
       ],
-      withDecryption: true,
+      WithDecryption: true,
     };
-    parameters = await AWS.ssm.getParameters(params).promise();
-
-    host = parameters.turo_db_host;
-    port = parameters.turo_db_port;
-    database = parameters.turo_db_database;
-    dbUser = parameters.turo_db_user;
-    dbPassword = parameters.turo_db_admin_password;
-    sessionSecret = parameters.session_secret;
+    const response = await ssm.getParameters(params).promise();
+    host = response.Parameters.find(obj => obj.Name === 'turo_db_host').Value;
+    port = response.Parameters.find(obj => obj.Name === 'turo_db_port').Value;
+    database = response.Parameters.find(obj => obj.Name === 'turo_db_database').Value;
+    dbUser = response.Parameters.find(obj => obj.Name === 'turo_db_user').Value;
+    dbPassword = response.Parameters.find(obj => obj.Name === 'turo_db_admin_password').Value;
+    sessionSecret = response.Parameters.find(obj => obj.Name === 'turo_session_secret').Value;
   } else {
     host = process.env.DB_HOST;
     port = process.env.DB_PORT;
@@ -73,7 +73,6 @@ const initHandler = async () => {
 
   const withDb = async (f) => {
     const db = await dbPool.connect();
-
     try {
       await f(db);
     } finally {
@@ -231,9 +230,17 @@ function pruneSessions() {
 }
 
 module.exports.handler = async (event, context) => {
-  await initHandler();
-  await pruneSessions();
-  const result = await handler(event, context);
-  await dbPool.end();
-  return result;
+  let result = null;
+  try {
+    await initHandler();
+    await pruneSessions();
+    result = await handler(event, context);
+    await dbPool.end();
+    return result;
+  } catch (e) {
+    /* eslint-disable no-console */
+    // Rule disabled because we want to log into Cloudwatch logs possible errors.
+    console.log(e);
+    return result;
+  }
 };
