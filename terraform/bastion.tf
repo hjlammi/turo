@@ -16,11 +16,11 @@ resource "aws_security_group" "bastion" {
   vpc_id = "${aws_vpc.turo.id}"
   name_prefix = "bastion"
   ingress {
-    description = "Private subnet"
-    protocol = -1
-    from_port = 0
-    to_port = 0
-    cidr_blocks = ["88.115.124.61/32"]
+    description = "SSH from trusted IPs"
+    protocol = "tcp"
+    from_port = 22
+    to_port = 22
+    cidr_blocks = ["88.115.124.36/32"]
   }
   egress {
     description = "Internet access"

@@ -45,17 +45,6 @@ resource "aws_network_interface" "nat" {
   }
 }
 
-resource "aws_eip" "instance" {
-  vpc = true
-  network_interface = "${aws_network_interface.nat.id}"
-  tags {
-    Name = "NAT"
-  }
-  lifecycle {
-    prevent_destroy = true
-  }
-}
-
 resource "aws_instance" "nat" {
   instance_type = "t2.nano"
   ami = "${data.aws_ami.nat.id}"

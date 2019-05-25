@@ -82,6 +82,12 @@ functions:
       - http:
           path: e2e/users
           method: delete
+    vpc:
+      securityGroupIds:
+        - sg-0af8308ff30faf82c
+      subnetIds:
+        - subnet-0d4db35828497111d
+        - subnet-0a9e4cc978def886c
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events

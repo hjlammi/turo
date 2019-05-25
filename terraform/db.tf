@@ -30,7 +30,8 @@ resource "aws_security_group" "db" {
     to_port = 5432
     security_groups = [
       "${aws_security_group.codebuild.id}",
-      "${aws_security_group.bastion.id}"
+      "${aws_security_group.bastion.id}",
+      "${aws_security_group.turo_lambda.id}"
     ]
   }
   tags {
