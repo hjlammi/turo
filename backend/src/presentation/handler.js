@@ -165,7 +165,7 @@ const initHandler = async () => {
 
   app.post('/users/logout', async (req, res) => {
     req.session.destroy();
-    res.send(200);
+    res.sendStatus(200);
   });
 
   app.get('/users/me', async (req, res) => {
