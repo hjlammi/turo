@@ -25,7 +25,7 @@ phases:
      - flyway-5.2.4/flyway migrate -url="jdbc:postgresql://turodb.ccahsd6rorzm.eu-west-1.rds.amazonaws.com:5432/turo_db" -user="db_admin" -password="$(aws ssm get-parameter --name db_instance_password --with-decryption --output text --query Parameter.Value)" -locations=filesystem:../sql
      - echo "Build React app"
      - cd ../frontend/turo-app
-     - npm run build
+     - env NODE_ENV=production npm run build
      - aws s3 sync build s3://turo-app
  post_build:
    commands:
