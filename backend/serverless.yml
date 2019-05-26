@@ -61,36 +61,89 @@ functions:
       - http:
           path: users/register
           method: post
+          cors:
+            origins:
+              - ${env:FRONTEND_URL}
+            headers:
+              - csrf-token
+              - Content-Type
+            allowCredentials: true
       - http:
           path: users/login
           method: post
+          cors:
+            origins:
+              - ${env:FRONTEND_URL}
+            headers:
+              - csrf-token
+              - Content-Type
+            allowCredentials: true
       - http:
           path: users/logout
           method: post
+          cors:
+            origins:
+              - ${env:FRONTEND_URL}
+            headers:
+              - csrf-token
+              - Content-Type
+            allowCredentials: true
       - http:
           path: csrf-token
           method: get
+          cors:
+            origins:
+              - ${env:FRONTEND_URL}
+            headers:
+              - csrf-token
+              - Content-Type
+            allowCredentials: true
       - http:
           path: users/me
           method: get
+          cors:
+            origins:
+              - ${env:FRONTEND_URL}
+            headers:
+              - csrf-token
+              - Content-Type
+            allowCredentials: true
       - http:
           path: posts
           method: post
+          cors:
+            origins:
+              - ${env:FRONTEND_URL}
+            headers:
+              - csrf-token
+              - Content-Type
+            allowCredentials: true
       - http:
           path: posts
           method: get
+          cors:
+            origins:
+              - ${env:FRONTEND_URL}
+            headers:
+              - csrf-token
+              - Content-Type
+            allowCredentials: true
       - http:
           path: e2e/users
           method: delete
+          cors:
+            origins:
+              - ${env:FRONTEND_URL}
+            headers:
+              - csrf-token
+              - Content-Type
+            allowCredentials: true
     vpc:
       securityGroupIds:
         - sg-0af8308ff30faf82c
       subnetIds:
         - subnet-0d4db35828497111d
         - subnet-0a9e4cc978def886c
-    cors:
-      origins:
-        - ${env:FRONTEND_URL}
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events

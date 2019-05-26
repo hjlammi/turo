@@ -5,7 +5,7 @@ import getCsrfToken from '../selectors/getCsrfToken';
 function* createPost({ post, userId }) {
   const token = yield select(getCsrfToken);
   try {
-    const response = yield fetch('http://localhost:4000/posts',
+    const response = yield fetch(`${process.env.REACT_APP_BACKEND_URL}/posts`,
       {
         method: 'POST',
         headers: {

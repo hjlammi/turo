@@ -230,17 +230,20 @@ function pruneSessions() {
 }
 
 module.exports.handler = async (event, context) => {
-  let result = null;
+  let response = null;
   try {
     await initHandler();
     await pruneSessions();
-    result = await handler(event, context);
+    response = await handler(event, context);
     await dbPool.end();
-    return result;
+    response.headers['Access-Control-Allow-Origin'] = process.env.FRONTEND_URL;
+    response.headers['Access-Control-Allow-Headers'] = 'csrf-token, Content-Type';
+    response.headers['Access-Control-Allow-Credentials'] = true;
+    return response;
   } catch (e) {
     /* eslint-disable no-console */
     // Rule disabled because we want to log into Cloudwatch logs possible errors.
     console.log(e);
-    return result;
+    return response;
   }
 };
