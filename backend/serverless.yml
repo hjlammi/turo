@@ -88,6 +88,9 @@ functions:
       subnetIds:
         - subnet-0d4db35828497111d
         - subnet-0a9e4cc978def886c
+    cors:
+      origins:
+        - ${env:FRONTEND_URL}
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
