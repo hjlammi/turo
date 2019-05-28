@@ -4,7 +4,6 @@ notes.txt
 frontend/turo-app/cypress/videos/
 
 */.env.development
-*/.env
 
 # package directories
 node_modules
