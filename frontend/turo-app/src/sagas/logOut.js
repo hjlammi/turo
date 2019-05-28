@@ -12,7 +12,6 @@ function* logOut() {
           'csrf-token': token,
         },
         credentials: 'include',
-        cache: 'no-store',
       });
 
     window.location.reload(true);
