@@ -239,6 +239,7 @@ module.exports.handler = async (event, context) => {
     response.headers['Access-Control-Allow-Origin'] = process.env.FRONTEND_URL;
     response.headers['Access-Control-Allow-Headers'] = 'csrf-token, Content-Type';
     response.headers['Access-Control-Allow-Credentials'] = true;
+    response.headers['Cache-Control'] = 'no-store';
     return response;
   } catch (e) {
     /* eslint-disable no-console */
