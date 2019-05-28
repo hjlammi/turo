@@ -1,10 +1,10 @@
-import { put, takeLatest } from 'redux-saga/effects';
-import loadUserData from '../actions/loadUserData';
-import fetchCsrfToken from '../actions/fetchCsrfToken';
+import { call, takeLatest } from 'redux-saga/effects';
+import loadUserData from './loadUserData';
+import fetchCsrfToken from './fetchCsrfToken';
 
 function* init() {
-  yield put(loadUserData());
-  yield put(fetchCsrfToken());
+  yield call(fetchCsrfToken);
+  yield call(loadUserData);
 }
 
 export default [

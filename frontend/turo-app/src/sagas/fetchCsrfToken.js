@@ -1,6 +1,6 @@
-import { put, takeLatest } from 'redux-saga/effects';
+import { put } from 'redux-saga/effects';
 
-function* fetchCsrfToken() {
+export default function* fetchCsrfToken() {
   try {
     const response = yield fetch(`${process.env.REACT_APP_BACKEND_URL}/csrf-token`,
       {
@@ -22,7 +22,3 @@ function* fetchCsrfToken() {
     yield put({ type: 'FETCH_CSRF_TOKEN_FAILURE' });
   }
 }
-
-export default [
-  takeLatest('FETCH_CSRF_TOKEN', fetchCsrfToken),
-];

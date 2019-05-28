@@ -1,7 +1,7 @@
-import { put, takeLatest, select } from 'redux-saga/effects';
+import { put, select } from 'redux-saga/effects';
 import getCsrfToken from '../selectors/getCsrfToken';
 
-function* loadUserData() {
+export default function* loadUserData() {
   const token = yield select(getCsrfToken);
   try {
     const response = yield fetch(`${process.env.REACT_APP_BACKEND_URL}/users/me`,
@@ -25,7 +25,3 @@ function* loadUserData() {
     yield put({ type: 'GET_USERDATA_FAILURE' });
   }
 }
-
-export default [
-  takeLatest('LOAD_USER_DATA', loadUserData),
-];
