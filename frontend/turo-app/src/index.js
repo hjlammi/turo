@@ -2,23 +2,24 @@ import React from 'react';
 import './index.css';
 import createSagaMiddleware from 'redux-saga';
 import { render } from 'react-dom';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
-import { logger } from 'redux-logger';
 import reducer from './reducers/index';
 import * as serviceWorker from './serviceWorker';
 import App from './containers/AppContainer';
 import rootSaga from './sagas/index';
 
-// // create the saga middleware
 const sagaMiddleware = createSagaMiddleware();
-// mount it on the Store
-const store = createStore(
-  reducer,
-  applyMiddleware(sagaMiddleware, logger),
-);
+const middlewares = [sagaMiddleware];
 
-// then run the saga
+if (process.env.NODE_ENV !== 'production') {
+  /* eslint-disable global-require */
+  const { logger } = require('redux-logger');
+  middlewares.push(logger);
+}
+
+const store = compose(applyMiddleware(...middlewares))(createStore)(reducer);
+
 sagaMiddleware.run(rootSaga);
 
 render(
