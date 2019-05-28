@@ -4,14 +4,14 @@ Coursework for Secure Programming course.
 ## Running locally
 
 ### Prerequisite
-Docker: https://docs.docker.com/v17.12/install/#get-started
+Docker: https://docs.docker.com/v17.12/install/#get-started  
 Flyway: https://flywaydb.org/documentation/commandline/#download-and-installation (NOTE! Install Early-Access Preview, ie. 6.0.0-beta)
 
 ### Installation
-Create a folder for the application, e.g. turo_app.
+Create a folder for the application, e.g. turo_app.  
 Install Flyway inside the created turo_app folder.
 
-Also inside the folder fetch the source code:
+Also inside the folder fetch the source code:  
 `git clone git@github.com:hjlammi/turo.git`
 
 NOTE: Use Node version 10:
@@ -28,9 +28,9 @@ in all the following folders:
 - `turo_app/turo/backend`
 
 ### Database
-Build the Docker container containing the database:
-`docker-compose up -d`
-Create database tables with the Flyway migrations scripts
+Build the Docker container containing the database:  
+`docker-compose up -d`  
+Create database tables with the Flyway migrations scripts:  
 `npm run migrate`
 
 ### Starting the server
@@ -41,7 +41,9 @@ Create database tables with the Flyway migrations scripts
 
 ### Running tests
 #### Unit tests
+Run unit tests in the `turo/backend` folder:  
 `npm test`
 
 #### Integration tests
+Run integration tests in the `turo/frontend/turo-app/`
 `npm run cypress:open`
