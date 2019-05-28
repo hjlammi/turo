@@ -7,6 +7,7 @@ import '../css/header.css';
 
 const Header = (props) => {
   const { isLoggedIn, onLogOut } = props;
+
   return (
     <div className="header">
       <h1>{isLoggedIn ? '' : 'Welcome to turo-app!'}</h1>

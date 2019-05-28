@@ -15,6 +15,8 @@ function* logOut() {
         cache: 'no-store',
       });
 
+    window.location.reload(true);
+
     if (response.status === 200) {
       yield put({ type: 'LOG_OUT_SUCCESS' });
     } else {
