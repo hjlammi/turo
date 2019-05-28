@@ -26,6 +26,7 @@ context('Logout', () => {
             password: 'alices_password'
           }
         });
+        cy.visit('http://localhost:3000/#/');
     });
   });
 
@@ -33,7 +34,6 @@ context('Logout', () => {
   describe('logout functionality', () => {
     // She clicks the logout link and is logged out from the application and redirected to the login page.
     it('should redirect to the login page when logout link clicked', () => {
-      cy.visit('http://localhost:3000/#/');
       cy.get('.link').click();
       cy.location('hash').should('eq', '#/');
       cy.location('hash').should('eq', '#/login');
