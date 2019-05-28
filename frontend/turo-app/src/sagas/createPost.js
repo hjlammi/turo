@@ -17,6 +17,7 @@ function* createPost({ post, userId }) {
           post,
           userId,
         }),
+        cache: 'no-store',
       });
 
     if (response.status === 200) {

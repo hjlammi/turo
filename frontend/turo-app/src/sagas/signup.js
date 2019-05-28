@@ -17,6 +17,7 @@ function* signUp({ username, email, password }) {
           email,
           password,
         }),
+        cache: 'no-store',
       });
 
     const message = yield response.json();

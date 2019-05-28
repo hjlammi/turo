@@ -16,6 +16,7 @@ function* logIn({ email, password }) {
           email,
           password,
         }),
+        cache: 'no-store',
       });
 
     if (response.status === 200) {

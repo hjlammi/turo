@@ -12,6 +12,7 @@ function* loadUserData() {
           'csrf-token': token,
         },
         credentials: 'include',
+        cache: 'no-store',
       });
 
     if (response.status === 200) {

@@ -9,6 +9,7 @@ function* fetchCsrfToken() {
           'Content-Type': 'text/plain',
         },
         credentials: 'include',
+        cache: 'no-store',
       });
 
     if (response.status === 200) {
