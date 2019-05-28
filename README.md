@@ -30,6 +30,7 @@ in all the following folders:
 ### Database
 Build the Docker container containing the database:  
 `docker-compose up -d`  
+
 Create database tables with the Flyway migrations scripts:  
 `npm run migrate`
 
