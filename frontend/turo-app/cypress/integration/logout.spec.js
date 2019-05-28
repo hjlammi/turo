@@ -35,6 +35,7 @@ context('Logout', () => {
     it('should redirect to the login page when logout link clicked', () => {
       cy.visit('http://localhost:3000/#/');
       cy.get('.link').click();
+      cy.location('hash').should('eq', '#/');
       cy.location('hash').should('eq', '#/login');
 
       // Alice remembers that she forgot to write a post and logs in again.
